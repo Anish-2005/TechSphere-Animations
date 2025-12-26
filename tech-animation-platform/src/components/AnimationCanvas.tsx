@@ -12,40 +12,40 @@ interface TechAnimationProps {
 
 function TechVisualization({ animationType, isPaused }: TechAnimationProps) {
   const groupRef = useRef<THREE.Group>(null)
-  
+
   useFrame((state) => {
     if (!groupRef.current || isPaused) return
-    
+
     const time = state.clock.getElapsedTime()
-    
+
+    // Subtle pulsing animations for diagram elements
     switch(animationType) {
       case 'fullstack':
-        groupRef.current.rotation.y = Math.sin(time * 0.5) * 0.2
+        // Gentle data flow animation
         break
       case 'ai-ml':
-        groupRef.current.rotation.x = Math.sin(time * 0.3) * 0.1
-        groupRef.current.rotation.y = time * 0.1
+        // Neural network training pulses
         break
       case 'devops':
-        groupRef.current.rotation.z = Math.sin(time * 0.4) * 0.15
+        // CI/CD pipeline flow
         break
       case 'mobile':
-        groupRef.current.rotation.y = time * 0.2
+        // App lifecycle transitions
         break
       case 'database':
-        groupRef.current.rotation.y = Math.sin(time * 0.3) * 0.1
+        // Data processing flows
         break
       case 'web3':
-        groupRef.current.rotation.y = time * 0.1
+        // Blockchain consensus
         break
       case 'cybersecurity':
-        groupRef.current.rotation.y = Math.sin(time * 0.2) * 0.05
+        // Security monitoring pulses
         break
       case 'iot':
-        groupRef.current.rotation.y = time * 0.15
+        // Sensor data streams
         break
       case 'backend':
-        groupRef.current.rotation.x = Math.sin(time * 0.1) * 0.05
+        // API request flows
         break
     }
   })
@@ -53,23 +53,23 @@ function TechVisualization({ animationType, isPaused }: TechAnimationProps) {
   const renderAnimation = () => {
     switch(animationType) {
       case 'fullstack':
-        return <FullStackAnimation />
+        return <FullStackAnimation isPaused={isPaused} />
       case 'ai-ml':
-        return <AIMLAnimation />
+        return <AIMLAnimation isPaused={isPaused} />
       case 'devops':
-        return <DevOpsAnimation />
+        return <DevOpsAnimation isPaused={isPaused} />
       case 'mobile':
-        return <MobileDevAnimation />
+        return <MobileDevAnimation isPaused={isPaused} />
       case 'database':
-        return <DatabaseAnimation />
+        return <DatabaseAnimation isPaused={isPaused} />
       case 'web3':
-        return <Web3Animation />
+        return <Web3Animation isPaused={isPaused} />
       case 'cybersecurity':
-        return <CybersecurityAnimation />
+        return <CybersecurityAnimation isPaused={isPaused} />
       case 'iot':
-        return <IoTAnimation />
+        return <IoTAnimation isPaused={isPaused} />
       case 'backend':
-        return <BackendAnimation />
+        return <BackendAnimation isPaused={isPaused} />
       default:
         return <DefaultAnimation />
     }
@@ -82,180 +82,126 @@ function TechVisualization({ animationType, isPaused }: TechAnimationProps) {
   )
 }
 
-function FullStackAnimation() {
-  const frontendRef = useRef<THREE.Group>(null)
-  const backendRef = useRef<THREE.Group>(null)
-  const databaseRef = useRef<THREE.Group>(null)
+function FullStackAnimation({ isPaused }: { isPaused: boolean }) {
   const dataFlowRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if (isPaused) return
     const time = state.clock.getElapsedTime()
-    if (frontendRef.current) {
-      frontendRef.current.rotation.y = Math.sin(time * 0.3) * 0.1
-      frontendRef.current.position.y = Math.sin(time * 0.5) * 0.1
-    }
-    if (backendRef.current) {
-      backendRef.current.rotation.y = Math.sin(time * 0.4) * 0.1
-      backendRef.current.position.y = Math.sin(time * 0.5 + Math.PI) * 0.1
-    }
-    if (databaseRef.current) {
-      databaseRef.current.rotation.y = Math.sin(time * 0.2) * 0.1
-    }
+
+    // Animate data flowing through the stack
     if (dataFlowRef.current) {
-      // Animate data flowing from frontend to backend to database
-      const progress = (time * 0.5) % 3
+      const progress = (time * 0.3) % 4
       if (progress < 1) {
-        dataFlowRef.current.position.set(-1.5 + progress * 2.3, 1 - progress * 2, 0)
+        // Frontend to Backend
+        dataFlowRef.current.position.set(-1 + progress * 2, 1, 0)
       } else if (progress < 2) {
-        dataFlowRef.current.position.set(0.8, 0 - (progress - 1) * 1.5, 0)
+        // Backend processing
+        dataFlowRef.current.position.set(1, 1 - (progress - 1) * 2, 0)
+      } else if (progress < 3) {
+        // Backend to Database
+        dataFlowRef.current.position.set(1 - (progress - 2) * 2, -1, 0)
       } else {
-        dataFlowRef.current.position.set(0.8 - (progress - 2) * 0.8, -1.5 + (progress - 2) * 1.5, 0)
+        // Database response back
+        dataFlowRef.current.position.set(-1 + (progress - 3) * 2, -1 + (progress - 3) * 2, 0)
       }
     }
   })
 
   return (
     <group>
-      {/* Frontend Layer - React/Angular/Vue ecosystem */}
-      <group ref={frontendRef}>
-        {/* React (blue sphere) */}
-        <mesh position={[-1.5, 1, 0]}>
-          <sphereGeometry args={[0.2, 16, 16]} />
-          <meshStandardMaterial color="#61DAFB" emissive="#61DAFB" emissiveIntensity={0.4} />
+      {/* Frontend Layer */}
+      <group position={[-2, 1, 0]}>
+        {/* Browser/Client */}
+        <mesh position={[0, 0, 0]}>
+          <boxGeometry args={[0.8, 0.6, 0.1]} />
+          <meshStandardMaterial color="#3B82F6" />
         </mesh>
-        <Text position={[-1.5, 1.4, 0]} fontSize={0.08} color="#61DAFB" anchorX="center" anchorY="middle">
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#1E40AF" anchorX="center" anchorY="middle">
+          Frontend
+        </Text>
+
+        {/* React Component */}
+        <mesh position={[0, -0.3, 0]}>
+          <boxGeometry args={[0.4, 0.3, 0.05]} />
+          <meshStandardMaterial color="#61DAFB" />
+        </mesh>
+        <Text position={[0, -0.1, 0]} fontSize={0.05} color="#0891B2" anchorX="center" anchorY="middle">
           React
         </Text>
+      </group>
 
-        {/* HTML (orange box) */}
-        <mesh position={[-0.8, 1.2, 0]}>
-          <boxGeometry args={[0.3, 0.2, 0.1]} />
-          <meshStandardMaterial color="#E34F26" emissive="#E34F26" emissiveIntensity={0.3} />
+      {/* Backend Layer */}
+      <group position={[2, 1, 0]}>
+        {/* API Server */}
+        <mesh position={[0, 0, 0]}>
+          <cylinderGeometry args={[0.4, 0.4, 0.6, 16]} />
+          <meshStandardMaterial color="#10B981" />
         </mesh>
-        <Text position={[-0.8, 1.5, 0]} fontSize={0.06} color="#E34F26" anchorX="center" anchorY="middle">
-          HTML
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#047857" anchorX="center" anchorY="middle">
+          Backend
         </Text>
 
-        {/* CSS (blue box) */}
-        <mesh position={[-0.8, 0.8, 0]}>
-          <boxGeometry args={[0.3, 0.2, 0.1]} />
-          <meshStandardMaterial color="#1572B6" emissive="#1572B6" emissiveIntensity={0.3} />
+        {/* Node.js/Express */}
+        <mesh position={[0, -0.4, 0]}>
+          <boxGeometry args={[0.5, 0.2, 0.05]} />
+          <meshStandardMaterial color="#339933" />
         </mesh>
-        <Text position={[-0.8, 1.1, 0]} fontSize={0.06} color="#1572B6" anchorX="center" anchorY="middle">
-          CSS
-        </Text>
-
-        {/* TypeScript (blue cylinder) */}
-        <mesh position={[-2.2, 1, 0]}>
-          <cylinderGeometry args={[0.15, 0.15, 0.3, 16]} />
-          <meshStandardMaterial color="#3178C6" emissive="#3178C6" emissiveIntensity={0.3} />
-        </mesh>
-        <Text position={[-2.2, 1.4, 0]} fontSize={0.06} color="#3178C6" anchorX="center" anchorY="middle">
-          TypeScript
-        </Text>
-
-        {/* JavaScript (yellow sphere) */}
-        <mesh position={[-0.8, 0.5, 0]}>
-          <sphereGeometry args={[0.15, 16, 16]} />
-          <meshStandardMaterial color="#F7DF1E" emissive="#F7DF1E" emissiveIntensity={0.3} />
-        </mesh>
-        <Text position={[-0.8, 0.75, 0]} fontSize={0.05} color="#000000" anchorX="center" anchorY="middle">
-          JavaScript
+        <Text position={[0, -0.2, 0]} fontSize={0.05} color="#166534" anchorX="center" anchorY="middle">
+          Node.js + Express
         </Text>
       </group>
 
-      {/* Backend Layer - Server-side technologies */}
-      <group ref={backendRef}>
-        {/* Node.js (green cylinder) */}
-        <mesh position={[0.8, 0, 0]}>
-          <cylinderGeometry args={[0.2, 0.2, 0.4, 16]} />
-          <meshStandardMaterial color="#339933" emissive="#339933" emissiveIntensity={0.4} />
+      {/* Database Layer */}
+      <group position={[0, -1, 0]}>
+        {/* Database Server */}
+        <mesh position={[0, 0, 0]}>
+          <cylinderGeometry args={[0.6, 0.6, 0.4, 16]} />
+          <meshStandardMaterial color="#6B7280" />
         </mesh>
-        <Text position={[0.8, 0.5, 0]} fontSize={0.07} color="#339933" anchorX="center" anchorY="middle">
-          Node.js
+        <Text position={[0, 0.4, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle">
+          Database
         </Text>
 
-        {/* Express.js (black box) */}
-        <mesh position={[1.5, 0.2, 0]}>
-          <boxGeometry args={[0.3, 0.2, 0.1]} />
-          <meshStandardMaterial color="#000000" emissive="#000000" emissiveIntensity={0.2} />
+        {/* PostgreSQL */}
+        <mesh position={[0, -0.3, 0]}>
+          <boxGeometry args={[0.4, 0.2, 0.05]} />
+          <meshStandardMaterial color="#336791" />
         </mesh>
-        <Text position={[1.5, 0.5, 0]} fontSize={0.06} color="#ffffff" anchorX="center" anchorY="middle">
-          Express.js
-        </Text>
-
-        {/* Next.js (black sphere) */}
-        <mesh position={[0, 0.3, 0]}>
-          <sphereGeometry args={[0.18, 16, 16]} />
-          <meshStandardMaterial color="#000000" emissive="#000000" emissiveIntensity={0.3} />
-        </mesh>
-        <Text position={[0, 0.6, 0]} fontSize={0.06} color="#ffffff" anchorX="center" anchorY="middle">
-          Next.js
-        </Text>
-
-        {/* API Gateway (orange sphere) */}
-        <mesh position={[0, -0.5, 0]}>
-          <sphereGeometry args={[0.15, 16, 16]} />
-          <meshStandardMaterial color="#FF6B35" emissive="#FF6B35" emissiveIntensity={0.5} />
-        </mesh>
-        <Text position={[0, -0.25, 0]} fontSize={0.05} color="#FF6B35" anchorX="center" anchorY="middle">
-          API Gateway
-        </Text>
-      </group>
-
-      {/* Database Layer - Data storage */}
-      <group ref={databaseRef}>
-        {/* MongoDB (green cylinder) */}
-        <mesh position={[0, -1.5, 0]}>
-          <cylinderGeometry args={[0.25, 0.25, 0.3, 16]} />
-          <meshStandardMaterial color="#47A248" emissive="#47A248" emissiveIntensity={0.3} />
-        </mesh>
-        <Text position={[0, -1.2, 0]} fontSize={0.06} color="#47A248" anchorX="center" anchorY="middle">
-          MongoDB
-        </Text>
-
-        {/* PostgreSQL (blue box) */}
-        <mesh position={[1.2, -1.5, 0]}>
-          <boxGeometry args={[0.4, 0.25, 0.15]} />
-          <meshStandardMaterial color="#336791" emissive="#336791" emissiveIntensity={0.3} />
-        </mesh>
-        <Text position={[1.2, -1.2, 0]} fontSize={0.06} color="#336791" anchorX="center" anchorY="middle">
+        <Text position={[0, -0.1, 0]} fontSize={0.05} color="#1E3A8A" anchorX="center" anchorY="middle">
           PostgreSQL
-        </Text>
-
-        {/* Redis (red sphere) */}
-        <mesh position={[-1.2, -1.5, 0]}>
-          <sphereGeometry args={[0.2, 16, 16]} />
-          <meshStandardMaterial color="#DC2626" emissive="#DC2626" emissiveIntensity={0.4} />
-        </mesh>
-        <Text position={[-1.2, -1.2, 0]} fontSize={0.06} color="#DC2626" anchorX="center" anchorY="middle">
-          Redis
         </Text>
       </group>
 
       {/* Data Flow Animation */}
       <group ref={dataFlowRef}>
-        <mesh>
+        <mesh position={[0, 0, 0]}>
           <sphereGeometry args={[0.08, 8, 8]} />
-          <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={1} />
+          <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.5} />
         </mesh>
+        <Text position={[0, 0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          Request
+        </Text>
       </group>
 
       {/* Connection Lines */}
-      <Line points={[[-1.5, 1, 0], [0.8, 0, 0]]} color="#60A5FA" lineWidth={2} />
-      <Line points={[[0.8, 0, 0], [0, -1.5, 0]]} color="#10B981" lineWidth={2} />
-      <Line points={[[-1.5, 1, 0], [0, -1.5, 0]]} color="#F59E0B" lineWidth={1} />
+      <Line points={[[-1.2, 1, 0], [-0.8, 1, 0]]} color="#6B7280" lineWidth={2} />
+      <Line points={[[-0.8, 1, 0], [1.2, 1, 0]]} color="#6B7280" lineWidth={2} />
+      <Line points={[[1.2, 1, 0], [1.8, 1, 0]]} color="#6B7280" lineWidth={2} />
+      <Line points={[[2, 0.4, 0], [0, -0.4, 0]]} color="#6B7280" lineWidth={2} />
+      <Line points={[[0, -0.4, 0], [-2, 0.4, 0]]} color="#6B7280" lineWidth={2} />
     </group>
   )
 }
 
-function AIMLAnimation() {
+function AIMLAnimation({ isPaused }: { isPaused: boolean }) {
   const dataRef = useRef<THREE.Group>(null)
   const networkRef = useRef<THREE.Group>(null)
   const trainingRef = useRef<THREE.Group>(null)
   const deploymentRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if (isPaused) return
     const time = state.clock.getElapsedTime()
     
     if (dataRef.current) {
@@ -451,13 +397,14 @@ function AIMLAnimation() {
   )
 }
 
-function DevOpsAnimation() {
+function DevOpsAnimation({ isPaused }: { isPaused: boolean }) {
   const pipelineRef = useRef<THREE.Group>(null)
   const containersRef = useRef<THREE.Group>(null)
   const cloudRef = useRef<THREE.Group>(null)
   const monitoringRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if (isPaused) return
     const time = state.clock.getElapsedTime()
     
     if (pipelineRef.current) {
@@ -646,13 +593,14 @@ function DevOpsAnimation() {
   )
 }
 
-function MobileDevAnimation() {
+function MobileDevAnimation({ isPaused }: { isPaused: boolean }) {
   const nativeRef = useRef<THREE.Group>(null)
   const crossPlatformRef = useRef<THREE.Group>(null)
   const apiRef = useRef<THREE.Group>(null)
   const featuresRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if (isPaused) return
     const time = state.clock.getElapsedTime()
     
     if (nativeRef.current) {
@@ -839,13 +787,14 @@ function MobileDevAnimation() {
   )
 }
 
-function DatabaseAnimation() {
+function DatabaseAnimation({ isPaused }: { isPaused: boolean }) {
   const relationalRef = useRef<THREE.Group>(null)
   const nosqlRef = useRef<THREE.Group>(null)
   const queryRef = useRef<THREE.Group>(null)
   const cacheRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if (isPaused) return
     const time = state.clock.getElapsedTime()
     
     if (relationalRef.current) {
@@ -1049,13 +998,14 @@ function DatabaseAnimation() {
   )
 }
 
-function Web3Animation() {
+function Web3Animation({ isPaused }: { isPaused: boolean }) {
   const blockchainRef = useRef<THREE.Group>(null)
   const smartContractRef = useRef<THREE.Group>(null)
   const dappRef = useRef<THREE.Group>(null)
   const walletRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if (isPaused) return
     const time = state.clock.getElapsedTime()
     
     if (blockchainRef.current) {
@@ -1258,13 +1208,14 @@ function Web3Animation() {
   )
 }
 
-function CybersecurityAnimation() {
+function CybersecurityAnimation({ isPaused }: { isPaused: boolean }) {
   const securityRef = useRef<THREE.Group>(null)
   const firewallRef = useRef<THREE.Group>(null)
   const encryptionRef = useRef<THREE.Group>(null)
   const threatRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if (isPaused) return
     const time = state.clock.getElapsedTime()
     
     if (securityRef.current) {
@@ -1453,13 +1404,14 @@ function CybersecurityAnimation() {
   )
 }
 
-function IoTAnimation() {
+function IoTAnimation({ isPaused }: { isPaused: boolean }) {
   const iotRef = useRef<THREE.Group>(null)
   const sensorRef = useRef<THREE.Group>(null)
   const gatewayRef = useRef<THREE.Group>(null)
   const cloudRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if (isPaused) return
     const time = state.clock.getElapsedTime()
     
     if (iotRef.current) {
@@ -1488,21 +1440,36 @@ function IoTAnimation() {
           <cylinderGeometry args={[0.08, 0.08, 0.15, 8]} />
           <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[-1.5, 0.3, 0]} fontSize={0.05} color="#10B981" anchorX="center" anchorY="middle">
+          DHT11
+        </Text>
+
         {/* Motion sensors */}
         <mesh position={[-0.5, 0, 0]}>
           <sphereGeometry args={[0.1, 8, 8]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[-0.5, 0.3, 0]} fontSize={0.05} color="#F59E0B" anchorX="center" anchorY="middle">
+          PIR Sensor
+        </Text>
+
         {/* Smart meters */}
         <mesh position={[0.5, 0, 0]}>
           <boxGeometry args={[0.12, 0.08, 0.08]} />
           <meshStandardMaterial color="#3B82F6" emissive="#3B82F6" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[0.5, 0.3, 0]} fontSize={0.05} color="#3B82F6" anchorX="center" anchorY="middle">
+          Smart Meter
+        </Text>
+
         {/* Cameras */}
         <mesh position={[1.5, 0, 0]}>
           <coneGeometry args={[0.1, 0.15, 6]} />
           <meshStandardMaterial color="#8B5CF6" emissive="#8B5CF6" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[1.5, 0.3, 0]} fontSize={0.05} color="#8B5CF6" anchorX="center" anchorY="middle">
+          ESP32-CAM
+        </Text>
       </group>
 
       {/* IoT Gateways */}
@@ -1512,27 +1479,50 @@ function IoTAnimation() {
           <boxGeometry args={[0.25, 0.2, 0.15]} />
           <meshStandardMaterial color="#06B6D4" emissive="#06B6D4" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[-1, 0.4, 0]} fontSize={0.05} color="#06B6D4" anchorX="center" anchorY="middle">
+          Raspberry Pi
+        </Text>
+
         <mesh position={[0, 0, 0]}>
           <boxGeometry args={[0.25, 0.2, 0.15]} />
           <meshStandardMaterial color="#06B6D4" emissive="#06B6D4" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[0, 0.4, 0]} fontSize={0.05} color="#06B6D4" anchorX="center" anchorY="middle">
+          Arduino
+        </Text>
+
         <mesh position={[1, 0, 0]}>
           <boxGeometry args={[0.25, 0.2, 0.15]} />
           <meshStandardMaterial color="#06B6D4" emissive="#06B6D4" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[1, 0.4, 0]} fontSize={0.05} color="#06B6D4" anchorX="center" anchorY="middle">
+          ESP32
+        </Text>
+
         {/* Protocol converters */}
         <mesh position={[-1, -0.4, 0]}>
           <cylinderGeometry args={[0.1, 0.1, 0.08, 12]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[-1, -0.2, 0]} fontSize={0.04} color="#F59E0B" anchorX="center" anchorY="middle">
+          MQTT Bridge
+        </Text>
+
         <mesh position={[0, -0.4, 0]}>
           <cylinderGeometry args={[0.1, 0.1, 0.08, 12]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[0, -0.2, 0]} fontSize={0.04} color="#F59E0B" anchorX="center" anchorY="middle">
+          CoAP Gateway
+        </Text>
+
         <mesh position={[1, -0.4, 0]}>
           <cylinderGeometry args={[0.1, 0.1, 0.08, 12]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[1, -0.2, 0]} fontSize={0.04} color="#F59E0B" anchorX="center" anchorY="middle">
+          LoRaWAN
+        </Text>
       </group>
 
       {/* Cloud Platform */}
@@ -1542,28 +1532,51 @@ function IoTAnimation() {
           <boxGeometry args={[0.3, 0.25, 0.2]} />
           <meshStandardMaterial color="#3B82F6" emissive="#3B82F6" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[-1, 0.4, 0]} fontSize={0.05} color="#3B82F6" anchorX="center" anchorY="middle">
+          AWS IoT
+        </Text>
+
         <mesh position={[0, 0, 0]}>
           <boxGeometry args={[0.3, 0.25, 0.2]} />
           <meshStandardMaterial color="#3B82F6" emissive="#3B82F6" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[0, 0.4, 0]} fontSize={0.05} color="#3B82F6" anchorX="center" anchorY="middle">
+          Azure IoT Hub
+        </Text>
+
         <mesh position={[1, 0, 0]}>
           <boxGeometry args={[0.3, 0.25, 0.2]} />
           <meshStandardMaterial color="#3B82F6" emissive="#3B82F6" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[1, 0.4, 0]} fontSize={0.05} color="#3B82F6" anchorX="center" anchorY="middle">
+          Google IoT Core
+        </Text>
+
         {/* Data processing */}
         <mesh position={[0, -0.4, 0]}>
           <sphereGeometry args={[0.15, 16, 16]} />
           <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[0, -0.1, 0]} fontSize={0.05} color="#10B981" anchorX="center" anchorY="middle">
+          Stream Processing
+        </Text>
+
         {/* Analytics */}
         <mesh position={[-1, -0.4, 0]}>
           <octahedronGeometry args={[0.12, 0]} />
           <meshStandardMaterial color="#8B5CF6" emissive="#8B5CF6" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[-1, -0.1, 0]} fontSize={0.05} color="#8B5CF6" anchorX="center" anchorY="middle">
+          Machine Learning
+        </Text>
+
         <mesh position={[1, -0.4, 0]}>
           <octahedronGeometry args={[0.12, 0]} />
           <meshStandardMaterial color="#8B5CF6" emissive="#8B5CF6" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[1, -0.1, 0]} fontSize={0.05} color="#8B5CF6" anchorX="center" anchorY="middle">
+          Predictive Analytics
+        </Text>
       </group>
 
       {/* Data Flow Connections */}
@@ -1584,13 +1597,14 @@ function IoTAnimation() {
   )
 }
 
-function BackendAnimation() {
+function BackendAnimation({ isPaused }: { isPaused: boolean }) {
   const backendRef = useRef<THREE.Group>(null)
   const apiRef = useRef<THREE.Group>(null)
   const authRef = useRef<THREE.Group>(null)
   const dataRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if (isPaused) return
     const time = state.clock.getElapsedTime()
     
     if (backendRef.current) {
@@ -1619,21 +1633,36 @@ function BackendAnimation() {
           <cylinderGeometry args={[0.12, 0.12, 0.08, 16]} />
           <meshStandardMaterial color="#3B82F6" emissive="#3B82F6" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[-1.5, 0.3, 0]} fontSize={0.05} color="#3B82F6" anchorX="center" anchorY="middle">
+          Express.js
+        </Text>
+
         {/* GraphQL */}
         <mesh position={[-0.5, 0, 0]}>
           <octahedronGeometry args={[0.1, 0]} />
           <meshStandardMaterial color="#E91E63" emissive="#E91E63" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[-0.5, 0.3, 0]} fontSize={0.05} color="#E91E63" anchorX="center" anchorY="middle">
+          Apollo GraphQL
+        </Text>
+
         {/* WebSocket */}
         <mesh position={[0.5, 0, 0]}>
           <sphereGeometry args={[0.1, 8, 8]} />
           <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[0.5, 0.3, 0]} fontSize={0.05} color="#10B981" anchorX="center" anchorY="middle">
+          Socket.io
+        </Text>
+
         {/* gRPC */}
         <mesh position={[1.5, 0, 0]}>
           <boxGeometry args={[0.12, 0.12, 0.12]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[1.5, 0.3, 0]} fontSize={0.05} color="#F59E0B" anchorX="center" anchorY="middle">
+          gRPC
+        </Text>
       </group>
 
       {/* Authentication & Authorization */}
@@ -1643,21 +1672,36 @@ function BackendAnimation() {
           <cylinderGeometry args={[0.08, 0.08, 0.15, 8]} />
           <meshStandardMaterial color="#8B5CF6" emissive="#8B5CF6" emissiveIntensity={0.5} />
         </mesh>
+        <Text position={[-1, 0.3, 0]} fontSize={0.05} color="#8B5CF6" anchorX="center" anchorY="middle">
+          JWT
+        </Text>
+
         {/* OAuth */}
         <mesh position={[0, 0, 0]}>
           <coneGeometry args={[0.1, 0.18, 8]} />
           <meshStandardMaterial color="#06B6D4" emissive="#06B6D4" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[0, 0.3, 0]} fontSize={0.05} color="#06B6D4" anchorX="center" anchorY="middle">
+          OAuth 2.0
+        </Text>
+
         {/* Session management */}
         <mesh position={[1, 0, 0]}>
           <boxGeometry args={[0.12, 0.08, 0.08]} />
           <meshStandardMaterial color="#EF4444" emissive="#EF4444" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[1, 0.3, 0]} fontSize={0.05} color="#EF4444" anchorX="center" anchorY="middle">
+          Redis Sessions
+        </Text>
+
         {/* User database */}
         <mesh position={[0, -0.4, 0]}>
           <cylinderGeometry args={[0.15, 0.15, 0.1, 16]} />
           <meshStandardMaterial color="#374151" emissive="#374151" emissiveIntensity={0.2} />
         </mesh>
+        <Text position={[0, -0.1, 0]} fontSize={0.05} color="#374151" anchorX="center" anchorY="middle">
+          PostgreSQL
+        </Text>
       </group>
 
       {/* Microservices Architecture */}
@@ -1667,26 +1711,45 @@ function BackendAnimation() {
           <boxGeometry args={[0.25, 0.2, 0.15]} />
           <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[-1.5, 0.4, 0]} fontSize={0.05} color="#10B981" anchorX="center" anchorY="middle">
+          User Service
+        </Text>
+
         {/* Payment service */}
         <mesh position={[-0.5, 0, 0]}>
           <boxGeometry args={[0.25, 0.2, 0.15]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[-0.5, 0.4, 0]} fontSize={0.05} color="#F59E0B" anchorX="center" anchorY="middle">
+          Payment Service
+        </Text>
+
         {/* Notification service */}
         <mesh position={[0.5, 0, 0]}>
           <boxGeometry args={[0.25, 0.2, 0.15]} />
           <meshStandardMaterial color="#3B82F6" emissive="#3B82F6" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[0.5, 0.4, 0]} fontSize={0.05} color="#3B82F6" anchorX="center" anchorY="middle">
+          Notification Service
+        </Text>
+
         {/* Analytics service */}
         <mesh position={[1.5, 0, 0]}>
           <boxGeometry args={[0.25, 0.2, 0.15]} />
           <meshStandardMaterial color="#8B5CF6" emissive="#8B5CF6" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[1.5, 0.4, 0]} fontSize={0.05} color="#8B5CF6" anchorX="center" anchorY="middle">
+          Analytics Service
+        </Text>
+
         {/* Service mesh */}
         <mesh position={[0, -0.4, 0]}>
           <torusGeometry args={[1.2, 0.05, 8, 32]} />
           <meshStandardMaterial color="#06B6D4" emissive="#06B6D4" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[0, -0.1, 0]} fontSize={0.06} color="#06B6D4" anchorX="center" anchorY="middle">
+          Istio Service Mesh
+        </Text>
       </group>
 
       {/* Data Layer */}
@@ -1696,21 +1759,36 @@ function BackendAnimation() {
           <cylinderGeometry args={[0.2, 0.2, 0.3, 16]} />
           <meshStandardMaterial color="#374151" emissive="#374151" emissiveIntensity={0.2} />
         </mesh>
+        <Text position={[-1, 0.4, 0]} fontSize={0.05} color="#374151" anchorX="center" anchorY="middle">
+          PostgreSQL
+        </Text>
+
         {/* Cache (Redis) */}
         <mesh position={[0, 0, 0]}>
           <sphereGeometry args={[0.18, 16, 16]} />
           <meshStandardMaterial color="#DC2626" emissive="#DC2626" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[0, 0.3, 0]} fontSize={0.05} color="#DC2626" anchorX="center" anchorY="middle">
+          Redis Cache
+        </Text>
+
         {/* Message queue */}
         <mesh position={[1, 0, 0]}>
           <boxGeometry args={[0.25, 0.15, 0.1]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[1, 0.3, 0]} fontSize={0.05} color="#F59E0B" anchorX="center" anchorY="middle">
+          RabbitMQ
+        </Text>
+
         {/* Data processing */}
         <mesh position={[0, -0.4, 0]}>
           <octahedronGeometry args={[0.12, 0]} />
           <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[0, -0.1, 0]} fontSize={0.05} color="#10B981" anchorX="center" anchorY="middle">
+          Apache Kafka
+        </Text>
       </group>
 
       {/* Data Flow Connections */}
@@ -1749,14 +1827,13 @@ function DefaultAnimation() {
 
 export function AnimationCanvas({ animationType, isPaused }: TechAnimationProps) {
   return (
-    <div className="w-full h-[600px] rounded-2xl overflow-hidden border border-white/10">
-      <Canvas>
+    <div className="w-full h-[600px] rounded-2xl overflow-hidden border border-gray-200 bg-gray-50">
+      <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
         <Suspense fallback={null}>
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={1} />
+          <ambientLight intensity={0.8} />
+          <pointLight position={[10, 10, 10]} intensity={0.5} />
           <TechVisualization animationType={animationType} isPaused={isPaused} />
-          <OrbitControls enableZoom enablePan enableRotate />
-          <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade />
+          <OrbitControls enableZoom enablePan enableRotate={false} />
         </Suspense>
       </Canvas>
     </div>
