@@ -763,56 +763,111 @@ function MobileDevAnimation({ isPaused }: { isPaused: boolean }) {
     <group>
       {/* Native Development */}
       <group position={[-2.5, 1, 0]}>
-        <IconMesh icon={Smartphone} position={[0, 0, 0]} color="#000000" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#000000" anchorX="center" anchorY="middle">
-          Native
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Native Development
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#000000" anchorX="center" anchorY="middle">
-          iOS/Android
+        <IconMesh icon={Smartphone} position={[-0.6, 0, 0]} color="#007AFF" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#007AFF" anchorX="center" anchorY="middle">
+          Swift
+        </Text>
+        <IconMesh icon={Smartphone} position={[0, 0, 0]} color="#3DDC84" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#3DDC84" anchorX="center" anchorY="middle">
+          Kotlin
+        </Text>
+        <IconMesh icon={Code} position={[0.6, 0, 0]} color="#A855F7" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#A855F7" anchorX="center" anchorY="middle">
+          Xcode/Android Studio
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Platform-Specific Code
         </Text>
       </group>
 
-      {/* Cross-Platform */}
+      {/* Cross-Platform Frameworks */}
       <group position={[-1, 1, 0]}>
-        <IconMesh icon={Code} position={[0, 0, 0]} color="#61DAFB" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#0891B2" anchorX="center" anchorY="middle">
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
           Cross-Platform
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#0891B2" anchorX="center" anchorY="middle">
-          React Native/Flutter
+        <IconMesh icon={Code} position={[-0.6, 0, 0]} color="#61DAFB" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#0891B2" anchorX="center" anchorY="middle">
+          React Native
+        </Text>
+        <IconMesh icon={Layers} position={[0, 0, 0]} color="#02569B" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#02569B" anchorX="center" anchorY="middle">
+          Flutter
+        </Text>
+        <IconMesh icon={Code} position={[0.6, 0, 0]} color="#3178C6" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#3178C6" anchorX="center" anchorY="middle">
+          Ionic
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Write Once, Run Anywhere
         </Text>
       </group>
 
-      {/* API Integration */}
+      {/* Backend & API Integration */}
       <group position={[-1, -1, 0]}>
-        <IconMesh icon={Globe} position={[0, 0, 0]} color="#FF6B35" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#C2410C" anchorX="center" anchorY="middle">
-          API Integration
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Backend Integration
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#C2410C" anchorX="center" anchorY="middle">
-          REST/GraphQL
+        <IconMesh icon={Globe} position={[-0.6, 0, 0]} color="#10B981" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          REST APIs
+        </Text>
+        <IconMesh icon={Network} position={[0, 0, 0]} color="#E10098" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#E10098" anchorX="center" anchorY="middle">
+          GraphQL
+        </Text>
+        <IconMesh icon={Zap} position={[0.6, 0, 0]} color="#F59E0B" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          WebSocket
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Real-time Data Sync
         </Text>
       </group>
 
-      {/* Device Features */}
+      {/* Device Features & Sensors */}
       <group position={[0.5, -1, 0]}>
-        <IconMesh icon={Activity} position={[0, 0, 0]} color="#10B981" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#047857" anchorX="center" anchorY="middle">
-          Device Features
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Device Capabilities
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
-          GPS/Camera/Sensors
+        <IconMesh icon={Activity} position={[-0.6, 0, 0]} color="#EF4444" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
+          GPS/Location
+        </Text>
+        <IconMesh icon={Monitor} position={[0, 0, 0]} color="#8B5CF6" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
+          Camera/ML Kit
+        </Text>
+        <IconMesh icon={Wifi} position={[0.6, 0, 0]} color="#06B6D4" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#0891B2" anchorX="center" anchorY="middle">
+          Bluetooth/NFC
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Hardware Integration
         </Text>
       </group>
 
-      {/* App Store Deployment */}
+      {/* Testing & Deployment */}
       <group position={[0.5, 1, 0]}>
-        <IconMesh icon={Box} position={[0, 0, 0]} color="#8B5CF6" />
-        <Text position={[0, 0.4, 0]} fontSize={0.06} color="#6D28D9" anchorX="center" anchorY="middle">
-          Deployment
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Testing & Distribution
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
-          App Store/Play Store
+        <IconMesh icon={Box} position={[-0.6, 0, 0]} color="#000000" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#000000" anchorX="center" anchorY="middle">
+          TestFlight
+        </Text>
+        <IconMesh icon={Box} position={[0, 0, 0]} color="#3DDC84" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#3DDC84" anchorX="center" anchorY="middle">
+          Google Play Beta
+        </Text>
+        <IconMesh icon={BarChart3} position={[0.6, 0, 0]} color="#F59E0B" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          Analytics
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          App Store Deployment
         </Text>
       </group>
 
@@ -823,7 +878,7 @@ function MobileDevAnimation({ isPaused }: { isPaused: boolean }) {
           <meshStandardMaterial color="#06B6D4" emissive="#06B6D4" emissiveIntensity={0.5} />
         </mesh>
         <Text position={[0, 0.15, 0]} fontSize={0.04} color="#0891B2" anchorX="center" anchorY="middle">
-          App
+          Mobile App
         </Text>
       </group>
 
@@ -873,56 +928,111 @@ function DatabaseAnimation({ isPaused }: { isPaused: boolean }) {
     <group>
       {/* Application Layer */}
       <group position={[-2.5, 1, 0]}>
-        <IconMesh icon={Globe} position={[0, 0, 0]} color="#3B82F6" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#1E40AF" anchorX="center" anchorY="middle">
-          Application
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Application Layer
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#1E40AF" anchorX="center" anchorY="middle">
-          API Request
+        <IconMesh icon={Globe} position={[-0.6, 0, 0]} color="#3B82F6" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#1E40AF" anchorX="center" anchorY="middle">
+          REST API
+        </Text>
+        <IconMesh icon={Server} position={[0, 0, 0]} color="#10B981" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          GraphQL
+        </Text>
+        <IconMesh icon={Code} position={[0.6, 0, 0]} color="#F59E0B" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          ORM
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Data Access Layer
         </Text>
       </group>
 
-      {/* Cache Layer */}
+      {/* Caching Layer */}
       <group position={[-1, 1, 0]}>
-        <IconMesh icon={Zap} position={[0, 0, 0]} color="#F59E0B" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#92400E" anchorX="center" anchorY="middle">
-          Cache
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Caching Layer
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
-          Redis/Memcached
+        <IconMesh icon={Zap} position={[-0.6, 0, 0]} color="#DC2626" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#B91C1C" anchorX="center" anchorY="middle">
+          Redis
         </Text>
-      </group>
-
-      {/* Database Layer */}
-      <group position={[-1, -1, 0]}>
-        <IconMesh icon={Database} position={[0, 0, 0]} color="#10B981" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#047857" anchorX="center" anchorY="middle">
-          Database
-        </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
-          SQL/NoSQL
-        </Text>
-      </group>
-
-      {/* Data Storage */}
-      <group position={[0.5, -1, 0]}>
         <IconMesh icon={HardDrive} position={[0, 0, 0]} color="#8B5CF6" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#6D28D9" anchorX="center" anchorY="middle">
-          Storage
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
+          Memcached
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
-          Tables/Documents
+        <IconMesh icon={Activity} position={[0.6, 0, 0]} color="#06B6D4" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#0891B2" anchorX="center" anchorY="middle">
+          CDN
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Fast Data Retrieval
         </Text>
       </group>
 
-      {/* Response */}
-      <group position={[0.5, 1, 0]}>
-        <IconMesh icon={MessageSquare} position={[0, 0, 0]} color="#EF4444" />
-        <Text position={[0, 0.4, 0]} fontSize={0.06} color="#DC2626" anchorX="center" anchorY="middle">
-          Response
+      {/* Database Engines */}
+      <group position={[-1, -1, 0]}>
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Database Engines
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
-          JSON Data
+        <IconMesh icon={Database} position={[-0.6, 0, 0]} color="#336791" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#1E3A8A" anchorX="center" anchorY="middle">
+          PostgreSQL
+        </Text>
+        <IconMesh icon={Database} position={[0, 0, 0]} color="#47A248" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#166534" anchorX="center" anchorY="middle">
+          MongoDB
+        </Text>
+        <IconMesh icon={Database} position={[0.6, 0, 0]} color="#4479A1" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#1E3A8A" anchorX="center" anchorY="middle">
+          MySQL
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          ACID vs BASE Consistency
+        </Text>
+      </group>
+
+      {/* Data Storage & Indexing */}
+      <group position={[0.5, -1, 0]}>
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Storage & Indexing
+        </Text>
+        <IconMesh icon={HardDrive} position={[-0.6, 0, 0]} color="#F59E0B" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          Tables
+        </Text>
+        <IconMesh icon={Box} position={[0, 0, 0]} color="#8B5CF6" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
+          Documents
+        </Text>
+        <IconMesh icon={Search} position={[0.6, 0, 0]} color="#10B981" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          Indexes
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Query Optimization
+        </Text>
+      </group>
+
+      {/* Response & Serialization */}
+      <group position={[0.5, 1, 0]}>
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Response & Caching
+        </Text>
+        <IconMesh icon={MessageSquare} position={[-0.6, 0, 0]} color="#06B6D4" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#0891B2" anchorX="center" anchorY="middle">
+          JSON
+        </Text>
+        <IconMesh icon={Zap} position={[0, 0, 0]} color="#EF4444" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
+          HTTP Cache
+        </Text>
+        <IconMesh icon={Workflow} position={[0.6, 0, 0]} color="#F59E0B" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          Pagination
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Optimized Data Delivery
         </Text>
       </group>
 
@@ -933,7 +1043,7 @@ function DatabaseAnimation({ isPaused }: { isPaused: boolean }) {
           <meshStandardMaterial color="#06B6D4" emissive="#06B6D4" emissiveIntensity={0.5} />
         </mesh>
         <Text position={[0, 0.15, 0]} fontSize={0.04} color="#0891B2" anchorX="center" anchorY="middle">
-          Data
+          Database Query
         </Text>
       </group>
 
@@ -981,58 +1091,113 @@ function Web3Animation({ isPaused }: { isPaused: boolean }) {
 
   return (
     <group>
-      {/* User/DApp */}
+      {/* Frontend DApp */}
       <group position={[-2.5, 1, 0]}>
-        <IconMesh icon={Globe} position={[0, 0, 0]} color="#3B82F6" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#1E40AF" anchorX="center" anchorY="middle">
-          User/DApp
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Frontend DApp
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#1E40AF" anchorX="center" anchorY="middle">
-          Transaction Request
+        <IconMesh icon={Globe} position={[-0.6, 0, 0]} color="#3B82F6" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#1E40AF" anchorX="center" anchorY="middle">
+          React/Vue
+        </Text>
+        <IconMesh icon={Code} position={[0, 0, 0]} color="#61DAFB" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#0891B2" anchorX="center" anchorY="middle">
+          Web3.js
+        </Text>
+        <IconMesh icon={MessageSquare} position={[0.6, 0, 0]} color="#10B981" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          Ethers.js
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          User Interface & API Calls
         </Text>
       </group>
 
-      {/* Wallet */}
+      {/* Wallet Connection */}
       <group position={[-1, 1, 0]}>
-        <IconMesh icon={Key} position={[0, 0, 0]} color="#F59E0B" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#92400E" anchorX="center" anchorY="middle">
-          Wallet
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Wallet Connection
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
-          MetaMask/Coinbase
+        <IconMesh icon={Key} position={[-0.6, 0, 0]} color="#F59E0B" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          MetaMask
+        </Text>
+        <IconMesh icon={Shield} position={[0, 0, 0]} color="#8B5CF6" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
+          WalletConnect
+        </Text>
+        <IconMesh icon={Lock} position={[0.6, 0, 0]} color="#EF4444" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
+          Private Keys
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Secure Authentication
         </Text>
       </group>
 
-      {/* Smart Contract */}
+      {/* Smart Contracts */}
       <group position={[-1, -1, 0]}>
-        <IconMesh icon={Code} position={[0, 0, 0]} color="#10B981" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#047857" anchorX="center" anchorY="middle">
-          Smart Contract
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Smart Contracts
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
-          Solidity Code
+        <IconMesh icon={Code} position={[-0.6, 0, 0]} color="#10B981" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          Solidity
+        </Text>
+        <IconMesh icon={Box} position={[0, 0, 0]} color="#F59E0B" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          OpenZeppelin
+        </Text>
+        <IconMesh icon={Activity} position={[0.6, 0, 0]} color="#8B5CF6" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
+          Hardhat
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Decentralized Logic
         </Text>
       </group>
 
-      {/* Blockchain */}
+      {/* Blockchain Network */}
       <group position={[0.5, -1, 0]}>
-        <IconMesh icon={Network} position={[0, 0, 0]} color="#8B5CF6" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#6D28D9" anchorX="center" anchorY="middle">
-          Blockchain
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Blockchain Network
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
-          Ethereum/Polygon
+        <IconMesh icon={Network} position={[-0.6, 0, 0]} color="#8B5CF6" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
+          Ethereum
+        </Text>
+        <IconMesh icon={Zap} position={[0, 0, 0]} color="#10B981" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          Polygon
+        </Text>
+        <IconMesh icon={Box} position={[0.6, 0, 0]} color="#F59E0B" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          IPFS
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Decentralized Storage
         </Text>
       </group>
 
-      {/* Confirmation */}
+      {/* Transaction Confirmation */}
       <group position={[0.5, 1, 0]}>
-        <IconMesh icon={Box} position={[0, 0, 0]} color="#EF4444" />
-        <Text position={[0, 0.4, 0]} fontSize={0.06} color="#DC2626" anchorX="center" anchorY="middle">
-          Confirmation
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Transaction Mining
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
-          Block Mined
+        <IconMesh icon={Activity} position={[-0.6, 0, 0]} color="#EF4444" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
+          Gas Fees
+        </Text>
+        <IconMesh icon={Box} position={[0, 0, 0]} color="#06B6D4" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#0891B2" anchorX="center" anchorY="middle">
+          Block Confirmation
+        </Text>
+        <IconMesh icon={BarChart3} position={[0.6, 0, 0]} color="#10B981" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          Explorer
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Immutable Ledger
         </Text>
       </group>
 
@@ -1043,7 +1208,7 @@ function Web3Animation({ isPaused }: { isPaused: boolean }) {
           <meshStandardMaterial color="#06B6D4" emissive="#06B6D4" emissiveIntensity={0.5} />
         </mesh>
         <Text position={[0, 0.15, 0]} fontSize={0.04} color="#0891B2" anchorX="center" anchorY="middle">
-          TX
+          Blockchain TX
         </Text>
       </group>
 
@@ -1091,58 +1256,113 @@ function CybersecurityAnimation({ isPaused }: { isPaused: boolean }) {
 
   return (
     <group>
-      {/* Network Layer */}
+      {/* Threat Detection */}
       <group position={[-2.5, 1, 0]}>
-        <IconMesh icon={Wifi} position={[0, 0, 0]} color="#EF4444" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#DC2626" anchorX="center" anchorY="middle">
-          Network Attack
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Threat Detection
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
-          DDoS/Malware
+        <IconMesh icon={Wifi} position={[-0.6, 0, 0]} color="#EF4444" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
+          Network Scans
         </Text>
-      </group>
-
-      {/* Firewall Layer */}
-      <group position={[-1, 1, 0]}>
         <IconMesh icon={Shield} position={[0, 0, 0]} color="#F59E0B" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#92400E" anchorX="center" anchorY="middle">
-          Firewall
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          IDS/IPS
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
-          Packet Filtering
+        <IconMesh icon={Activity} position={[0.6, 0, 0]} color="#10B981" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          Honeypots
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Attack Surface Monitoring
         </Text>
       </group>
 
-      {/* Application Layer */}
+      {/* Access Control */}
+      <group position={[-1, 1, 0]}>
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Access Control
+        </Text>
+        <IconMesh icon={Lock} position={[-0.6, 0, 0]} color="#8B5CF6" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
+          Multi-Factor Auth
+        </Text>
+        <IconMesh icon={Key} position={[0, 0, 0]} color="#06B6D4" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#0891B2" anchorX="center" anchorY="middle">
+          OAuth/JWT
+        </Text>
+        <IconMesh icon={Users} position={[0.6, 0, 0]} color="#F59E0B" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          RBAC
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Identity & Authorization
+        </Text>
+      </group>
+
+      {/* Data Protection */}
       <group position={[-1, -1, 0]}>
-        <IconMesh icon={Lock} position={[0, 0, 0]} color="#10B981" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#047857" anchorX="center" anchorY="middle">
-          Application
-        </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
-          Authentication
-        </Text>
-      </group>
-
-      {/* Data Layer */}
-      <group position={[0.5, -1, 0]}>
-        <IconMesh icon={Database} position={[0, 0, 0]} color="#8B5CF6" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#6D28D9" anchorX="center" anchorY="middle">
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
           Data Protection
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
-          Encryption
+        <IconMesh icon={Database} position={[-0.6, 0, 0]} color="#10B981" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          Encryption at Rest
+        </Text>
+        <IconMesh icon={Zap} position={[0, 0, 0]} color="#EF4444" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
+          TLS/SSL
+        </Text>
+        <IconMesh icon={HardDrive} position={[0.6, 0, 0]} color="#8B5CF6" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
+          Data Masking
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Confidentiality & Integrity
         </Text>
       </group>
 
-      {/* Monitoring/Response */}
-      <group position={[0.5, 1, 0]}>
-        <IconMesh icon={Eye} position={[0, 0, 0]} color="#06B6D4" />
-        <Text position={[0, 0.4, 0]} fontSize={0.06} color="#0891B2" anchorX="center" anchorY="middle">
-          Monitoring
+      {/* Threat Intelligence */}
+      <group position={[0.5, -1, 0]}>
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Threat Intelligence
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#0891B2" anchorX="center" anchorY="middle">
-          SIEM/Response
+        <IconMesh icon={BarChart3} position={[-0.6, 0, 0]} color="#F59E0B" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          SIEM
+        </Text>
+        <IconMesh icon={Eye} position={[0, 0, 0]} color="#06B6D4" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#0891B2" anchorX="center" anchorY="middle">
+          Log Analysis
+        </Text>
+        <IconMesh icon={Activity} position={[0.6, 0, 0]} color="#10B981" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          ML Detection
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Anomaly Detection
+        </Text>
+      </group>
+
+      {/* Incident Response */}
+      <group position={[0.5, 1, 0]}>
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Incident Response
+        </Text>
+        <IconMesh icon={Shield} position={[-0.6, 0, 0]} color="#DC2626" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#B91C1C" anchorX="center" anchorY="middle">
+          IR Playbooks
+        </Text>
+        <IconMesh icon={MessageSquare} position={[0, 0, 0]} color="#8B5CF6" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
+          Alerting
+        </Text>
+        <IconMesh icon={Workflow} position={[0.6, 0, 0]} color="#F59E0B" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          Forensics
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Containment & Recovery
         </Text>
       </group>
 
