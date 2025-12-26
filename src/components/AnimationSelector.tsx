@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Monitor, Cpu, Cloud, Smartphone, Database, Globe, Shield, Zap, Code, Server } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
 
 const animations = [
   { id: 'fullstack', title: 'Full Stack Development', icon: Monitor, color: 'from-blue-500 to-cyan-500' },
@@ -23,7 +24,21 @@ interface AnimationSelectorProps {
 
 export function AnimationSelector({ selectedAnimation, onSelectAnimation }: AnimationSelectorProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div>
+      <div className="flex items-center gap-3 mb-6">
+        <Image
+          src="/logoan.png"
+          alt="Logo"
+          width={40}
+          height={40}
+          className="rounded-lg"
+        />
+        <div>
+          <h2 className="text-2xl font-bold">Choose Your Animation</h2>
+          <p className="text-gray-400">Select from our collection of interactive tech visualizations</p>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {animations.map((animation, index) => {
         const Icon = animation.icon
         return (
@@ -82,5 +97,6 @@ export function AnimationSelector({ selectedAnimation, onSelectAnimation }: Anim
         )
       })}
     </div>
+  </div>
   )
 }

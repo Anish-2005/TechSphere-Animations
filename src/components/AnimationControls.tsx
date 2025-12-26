@@ -3,6 +3,7 @@
 import { Play, Pause, Download, RefreshCw } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Button } from './ui/Button'
+import Image from 'next/image'
 
 interface AnimationControlsProps {
   isPaused: boolean
@@ -27,6 +28,13 @@ export function AnimationControls({
     >
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
+          <Image
+            src="/logoan.png"
+            alt="Logo"
+            width={30}
+            height={30}
+            className="rounded-lg"
+          />
           <div className="px-3 py-1 bg-blue-500/20 rounded-full">
             <span className="text-sm font-medium text-blue-400">
               {animationType.toUpperCase().replace('-', ' ')}

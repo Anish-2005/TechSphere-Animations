@@ -2,21 +2,31 @@
 
 import { motion } from 'framer-motion'
 import { Sparkles } from 'lucide-react'
+import Image from 'next/image'
 
 export function HeroSection() {
   return (
     <div className="relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/10 to-transparent" />
       
-      <div className="container mx-auto px-4 py-24">
+      <div className="container mx-auto px-4 py-44">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center max-w-4xl mx-auto"
         >
-          <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20">
-            <Sparkles className="w-4 h-4 text-blue-400" />
-            <span className="text-sm font-medium text-blue-400">Interactive Tech Visualizations</span>
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <Image
+              src="/logoan.png"
+              alt="Logo"
+              width={60}
+              height={60}
+              className="rounded-lg"
+            />
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20">
+              <Sparkles className="w-4 h-4 text-blue-400" />
+              <span className="text-sm font-medium text-blue-400">Interactive Tech Visualizations</span>
+            </div>
           </div>
           
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
