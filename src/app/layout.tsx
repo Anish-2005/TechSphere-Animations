@@ -25,44 +25,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <header className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-lg border-b border-white/10 shadow-lg">
-          <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="relative">
-                <Image
-                  src="/logoan.png"
-                  alt="Logo"
-                  width={48}
-                  height={48}
-                  className="rounded-xl shadow-lg ring-2 ring-white/20"
-                />
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl blur opacity-75"></div>
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
-                  TechSphere
-                </h1>
-                <p className="text-xs text-gray-400 -mt-1">Animations</p>
-              </div>
-            </div>
-            
-            <div className="hidden md:block">
-              <p className="text-sm text-gray-300 font-medium">
-                Interactive 3D Tech Visualizations
-              </p>
-              <p className="text-xs text-gray-500">
-                Explore the future of technology
-              </p>
-            </div>
-          </div>
-        </header>
-        <div className="pt-20">
+     
+        <div className="">
           {children}
         </div>
-      </body>
     </html>
   );
 }
