@@ -1421,113 +1421,113 @@ function IoTAnimation({ isPaused }: { isPaused: boolean }) {
 
   return (
     <group>
-      {/* Sensors Layer */}
-      <group position={[0, 2, 0]}>
-        <Text position={[0, 0.3, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
-          Sensors
+      {/* Device Layer */}
+      <group position={[-2, 1.5, 0]}>
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Device Layer
         </Text>
-
-        <IconMesh icon={Activity} position={[-1, 0, 0]} color="#10B981" />
-        <Text position={[-1, -0.2, 0]} fontSize={0.04} color="#10B981" anchorX="center" anchorY="middle">
-          Temperature
+        <IconMesh icon={Activity} position={[-0.6, 0, 0]} color="#10B981" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          Temperature Sensors
         </Text>
-
-        <IconMesh icon={Activity} position={[0, 0, 0]} color="#3B82F6" />
-        <Text position={[0, -0.2, 0]} fontSize={0.04} color="#3B82F6" anchorX="center" anchorY="middle">
-          Humidity
+        <IconMesh icon={Wifi} position={[0, 0, 0]} color="#3B82F6" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#1E40AF" anchorX="center" anchorY="middle">
+          GPS Trackers
         </Text>
-
-        <IconMesh icon={Activity} position={[1, 0, 0]} color="#F59E0B" />
-        <Text position={[1, -0.2, 0]} fontSize={0.04} color="#F59E0B" anchorX="center" anchorY="middle">
-          Motion
+        <IconMesh icon={Smartphone} position={[0.6, 0, 0]} color="#F59E0B" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          Smart Cameras
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Physical Sensors & Actuators
         </Text>
       </group>
 
-      {/* Edge Processing Layer */}
-      <group position={[0, 1, 0]}>
-        <Text position={[0, 0.3, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
-          Edge Processing
+      {/* Edge Computing Layer */}
+      <group position={[-2, 0.5, 0]}>
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Edge Computing
         </Text>
-
-        <IconMesh icon={Cpu} position={[-1, 0, 0]} color="#06B6D4" />
-        <Text position={[-1, -0.2, 0]} fontSize={0.04} color="#06B6D4" anchorX="center" anchorY="middle">
+        <IconMesh icon={Cpu} position={[-0.6, 0, 0]} color="#06B6D4" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#0891B2" anchorX="center" anchorY="middle">
           Raspberry Pi
         </Text>
-
-        <IconMesh icon={Cpu} position={[0, 0, 0]} color="#06B6D4" />
-        <Text position={[0, -0.2, 0]} fontSize={0.04} color="#06B6D4" anchorX="center" anchorY="middle">
-          Arduino
+        <IconMesh icon={Server} position={[0, 0, 0]} color="#8B5CF6" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
+          Jetson Nano
         </Text>
-
-        <IconMesh icon={Cpu} position={[1, 0, 0]} color="#06B6D4" />
-        <Text position={[1, -0.2, 0]} fontSize={0.04} color="#06B6D4" anchorX="center" anchorY="middle">
-          ESP32
+        <IconMesh icon={Activity} position={[0.6, 0, 0]} color="#EF4444" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
+          Local AI/ML
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Real-time Processing
         </Text>
       </group>
 
-      {/* Gateway/Protocol Layer */}
-      <group position={[0, 0, 0]}>
-        <Text position={[0, 0.3, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
-          Gateway & Protocol
+      {/* Connectivity Layer */}
+      <group position={[-2, -0.5, 0]}>
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Connectivity
         </Text>
-
-        <IconMesh icon={Network} position={[-1, 0, 0]} color="#8B5CF6" />
-        <Text position={[-1, -0.2, 0]} fontSize={0.04} color="#8B5CF6" anchorX="center" anchorY="middle">
-          MQTT
+        <IconMesh icon={Network} position={[-0.6, 0, 0]} color="#10B981" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          MQTT Protocol
         </Text>
-
-        <IconMesh icon={Network} position={[0, 0, 0]} color="#8B5CF6" />
-        <Text position={[0, -0.2, 0]} fontSize={0.04} color="#8B5CF6" anchorX="center" anchorY="middle">
-          CoAP
+        <IconMesh icon={Wifi} position={[0, 0, 0]} color="#F59E0B" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          NB-IoT/LTE-M
         </Text>
-
-        <IconMesh icon={Network} position={[1, 0, 0]} color="#8B5CF6" />
-        <Text position={[1, -0.2, 0]} fontSize={0.04} color="#8B5CF6" anchorX="center" anchorY="middle">
+        <IconMesh icon={Zap} position={[0.6, 0, 0]} color="#3B82F6" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#1E40AF" anchorX="center" anchorY="middle">
           LoRaWAN
         </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Low-Power Wide Area Networks
+        </Text>
       </group>
 
-      {/* Cloud Processing Layer */}
-      <group position={[0, -1, 0]}>
-        <Text position={[0, 0.3, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
-          Cloud Processing
+      {/* Cloud Platform Layer */}
+      <group position={[2, 0.5, 0]}>
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Cloud Platform
         </Text>
-
-        <IconMesh icon={Cloud} position={[-1, 0, 0]} color="#3B82F6" />
-        <Text position={[-1, -0.25, 0]} fontSize={0.04} color="#3B82F6" anchorX="center" anchorY="middle">
-          AWS IoT
+        <IconMesh icon={Cloud} position={[-0.6, 0, 0]} color="#FF6B35" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#C2410C" anchorX="center" anchorY="middle">
+          AWS IoT Core
         </Text>
-
-        <IconMesh icon={Cloud} position={[0, 0, 0]} color="#3B82F6" />
-        <Text position={[0, -0.25, 0]} fontSize={0.04} color="#3B82F6" anchorX="center" anchorY="middle">
+        <IconMesh icon={Cloud} position={[0, 0, 0]} color="#0078D4" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#005A9E" anchorX="center" anchorY="middle">
           Azure IoT Hub
         </Text>
-
-        <IconMesh icon={Cloud} position={[1, 0, 0]} color="#3B82F6" />
-        <Text position={[1, -0.25, 0]} fontSize={0.04} color="#3B82F6" anchorX="center" anchorY="middle">
-          Google IoT Core
+        <IconMesh icon={Cloud} position={[0.6, 0, 0]} color="#34A853" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#166534" anchorX="center" anchorY="middle">
+          Google Cloud IoT
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Device Management & Security
         </Text>
       </group>
 
-      {/* Analytics Layer */}
-      <group position={[0, -2, 0]}>
-        <Text position={[0, 0.3, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
-          Analytics & AI
+      {/* Analytics & Applications Layer */}
+      <group position={[2, -0.5, 0]}>
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Analytics & Apps
         </Text>
-
-        <IconMesh icon={BarChart3} position={[-1, 0, 0]} color="#10B981" />
-        <Text position={[-1, -0.2, 0]} fontSize={0.04} color="#10B981" anchorX="center" anchorY="middle">
-          Stream Processing
+        <IconMesh icon={BarChart3} position={[-0.6, 0, 0]} color="#8B5CF6" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
+          Apache Kafka
         </Text>
-
-        <IconMesh icon={BarChart3} position={[0, 0, 0]} color="#F59E0B" />
-        <Text position={[0, -0.2, 0]} fontSize={0.04} color="#F59E0B" anchorX="center" anchorY="middle">
-          Machine Learning
+        <IconMesh icon={Activity} position={[0, 0, 0]} color="#06B6D4" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#0891B2" anchorX="center" anchorY="middle">
+          TensorFlow Lite
         </Text>
-
-        <IconMesh icon={BarChart3} position={[1, 0, 0]} color="#8B5CF6" />
-        <Text position={[1, -0.2, 0]} fontSize={0.04} color="#8B5CF6" anchorX="center" anchorY="middle">
-          Predictive Analytics
+        <IconMesh icon={Monitor} position={[0.6, 0, 0]} color="#10B981" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          Dashboards
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Real-time Insights & Control
         </Text>
       </group>
 
@@ -1571,19 +1571,22 @@ function BackendAnimation({ isPaused }: { isPaused: boolean }) {
 
     if (dataFlowRef.current) {
       // Animate data flow through backend layers
-      const progress = (time * 0.25) % 4
+      const progress = (time * 0.25) % 5
       if (progress < 1) {
         // API Gateway to Auth
-        dataFlowRef.current.position.set(-2, 1.5 - progress * 0.5, 0)
+        dataFlowRef.current.position.set(-2.5, 1.5 - progress * 0.8, 0)
       } else if (progress < 2) {
-        // Auth to Microservices
-        dataFlowRef.current.position.set(-2 + (progress - 1) * 2, 1 - (progress - 1) * 0.5, 0)
+        // Auth to Business Logic
+        dataFlowRef.current.position.set(-2.5 + (progress - 1) * 1.5, 0.7 - (progress - 1) * 0.4, 0)
       } else if (progress < 3) {
-        // Microservices to Data
-        dataFlowRef.current.position.set(0 + (progress - 2) * 2, 0.5 - (progress - 2) * 0.8, 0)
+        // Business Logic to Data Access
+        dataFlowRef.current.position.set(-1 + (progress - 2) * 1.5, 0.3 - (progress - 2) * 0.6, 0)
+      } else if (progress < 4) {
+        // Data Access to Infrastructure
+        dataFlowRef.current.position.set(0.5, -0.3 - (progress - 3) * 0.6, 0)
       } else {
-        // Data processing and response
-        dataFlowRef.current.position.set(2, -0.3 - (progress - 3) * 0.7, 0)
+        // Infrastructure to Monitoring
+        dataFlowRef.current.position.set(0.5 + (progress - 4) * 1.5, -0.9, 0)
       }
     }
   })
@@ -1591,99 +1594,112 @@ function BackendAnimation({ isPaused }: { isPaused: boolean }) {
   return (
     <group>
       {/* API Gateway Layer */}
-      <group position={[0, 2, 0]}>
-        <Text position={[0, 0.3, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+      <group position={[-2.5, 1.5, 0]}>
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
           API Gateway
         </Text>
-
-        <IconMesh icon={Globe} position={[-1, 0, 0]} color="#3B82F6" />
-        <Text position={[-1, -0.2, 0]} fontSize={0.04} color="#3B82F6" anchorX="center" anchorY="middle">
-          REST API
+        <IconMesh icon={Globe} position={[-0.6, 0, 0]} color="#3B82F6" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#1E40AF" anchorX="center" anchorY="middle">
+          Kong Gateway
         </Text>
-
-        <IconMesh icon={Globe} position={[0, 0, 0]} color="#E91E63" />
-        <Text position={[0, -0.2, 0]} fontSize={0.04} color="#E91E63" anchorX="center" anchorY="middle">
-          GraphQL
+        <IconMesh icon={Network} position={[0, 0, 0]} color="#E91E63" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#BE185D" anchorX="center" anchorY="middle">
+          GraphQL Apollo
         </Text>
-
-        <IconMesh icon={Globe} position={[1, 0, 0]} color="#10B981" />
-        <Text position={[1, -0.2, 0]} fontSize={0.04} color="#10B981" anchorX="center" anchorY="middle">
+        <IconMesh icon={Zap} position={[0.6, 0, 0]} color="#10B981" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
           WebSocket
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Request Routing & Transformation
         </Text>
       </group>
 
       {/* Authentication & Security Layer */}
-      <group position={[0, 1, 0]}>
-        <Text position={[0, 0.3, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+      <group position={[-2.5, 0.5, 0]}>
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
           Authentication & Security
         </Text>
-
-        <IconMesh icon={Shield} position={[-1, 0, 0]} color="#8B5CF6" />
-        <Text position={[-1, -0.2, 0]} fontSize={0.04} color="#8B5CF6" anchorX="center" anchorY="middle">
-          JWT Tokens
+        <IconMesh icon={Shield} position={[-0.6, 0, 0]} color="#8B5CF6" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
+          Auth0/JWT
         </Text>
-
-        <IconMesh icon={Shield} position={[0, 0, 0]} color="#06B6D4" />
-        <Text position={[0, -0.2, 0]} fontSize={0.04} color="#06B6D4" anchorX="center" anchorY="middle">
+        <IconMesh icon={Lock} position={[0, 0, 0]} color="#06B6D4" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#0891B2" anchorX="center" anchorY="middle">
           OAuth 2.0
         </Text>
-
-        <IconMesh icon={Shield} position={[1, 0, 0]} color="#EF4444" />
-        <Text position={[1, -0.2, 0]} fontSize={0.04} color="#EF4444" anchorX="center" anchorY="middle">
-          Rate Limiting
+        <IconMesh icon={Key} position={[0.6, 0, 0]} color="#EF4444" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
+          API Keys
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Identity & Access Management
         </Text>
       </group>
 
-      {/* Microservices Layer */}
-      <group position={[0, 0, 0]}>
-        <Text position={[0, 0.3, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
-          Microservices
+      {/* Business Logic Layer */}
+      <group position={[-1, 0.5, 0]}>
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Business Logic
         </Text>
-
-        <IconMesh icon={Server} position={[-1, 0, 0]} color="#10B981" />
-        <Text position={[-1, -0.2, 0]} fontSize={0.04} color="#10B981" anchorX="center" anchorY="middle">
-          User Service
+        <IconMesh icon={Server} position={[-0.6, 0, 0]} color="#10B981" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          Node.js/Express
         </Text>
-
-        <IconMesh icon={Server} position={[0, 0, 0]} color="#F59E0B" />
-        <Text position={[0, -0.2, 0]} fontSize={0.04} color="#F59E0B" anchorX="center" anchorY="middle">
-          Payment Service
+        <IconMesh icon={Code} position={[0, 0, 0]} color="#F59E0B" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          Python/FastAPI
         </Text>
-
-        <IconMesh icon={Server} position={[1, 0, 0]} color="#3B82F6" />
-        <Text position={[1, -0.2, 0]} fontSize={0.04} color="#3B82F6" anchorX="center" anchorY="middle">
-          Notification Service
+        <IconMesh icon={Workflow} position={[0.6, 0, 0]} color="#3B82F6" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#1E40AF" anchorX="center" anchorY="middle">
+          Java/Spring Boot
         </Text>
-
-        {/* Service mesh indicator */}
-        <mesh position={[0, -0.3, 0]}>
-          <torusGeometry args={[0.8, 0.03, 8, 16]} />
-          <meshStandardMaterial color="#06B6D4" emissive="#06B6D4" emissiveIntensity={0.4} />
-        </mesh>
-        <Text position={[0, -0.5, 0]} fontSize={0.04} color="#06B6D4" anchorX="center" anchorY="middle">
-          Service Mesh
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Application Logic & Processing
         </Text>
       </group>
 
-      {/* Data Layer */}
-      <group position={[0, -1, 0]}>
-        <Text position={[0, 0.3, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
-          Data & Messaging
+      {/* Data Access Layer */}
+      <group position={[-1, -0.5, 0]}>
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Data Access
         </Text>
-
-        <IconMesh icon={Database} position={[-1, 0, 0]} color="#374151" />
-        <Text position={[-1, -0.25, 0]} fontSize={0.04} color="#374151" anchorX="center" anchorY="middle">
+        <IconMesh icon={Database} position={[-0.6, 0, 0]} color="#336791" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#1E3A8A" anchorX="center" anchorY="middle">
           PostgreSQL
         </Text>
-
         <IconMesh icon={Zap} position={[0, 0, 0]} color="#DC2626" />
-        <Text position={[0, -0.2, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#B91C1C" anchorX="center" anchorY="middle">
           Redis Cache
         </Text>
+        <IconMesh icon={MessageSquare} position={[0.6, 0, 0]} color="#F59E0B" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          RabbitMQ
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Data Persistence & Caching
+        </Text>
+      </group>
 
-        <IconMesh icon={MessageSquare} position={[1, 0, 0]} color="#F59E0B" />
-        <Text position={[1, -0.2, 0]} fontSize={0.04} color="#F59E0B" anchorX="center" anchorY="middle">
-          Message Queue
+      {/* Infrastructure & Monitoring Layer */}
+      <group position={[0.5, -0.5, 0]}>
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Infrastructure & Monitoring
+        </Text>
+        <IconMesh icon={Container} position={[-0.6, 0, 0]} color="#10B981" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          Docker/K8s
+        </Text>
+        <IconMesh icon={Activity} position={[0, 0, 0]} color="#8B5CF6" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
+          Prometheus
+        </Text>
+        <IconMesh icon={BarChart3} position={[0.6, 0, 0]} color="#F59E0B" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          ELK Stack
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Deployment & Observability
         </Text>
       </group>
 
