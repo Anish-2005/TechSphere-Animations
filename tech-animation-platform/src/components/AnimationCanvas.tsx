@@ -370,12 +370,12 @@ function FullStackAnimation({ isPaused }: { isPaused: boolean }) {
 
       {/* Connection Lines */}
       <Line points={[[-2, 1.7, 0], [-2, 1.3, 0]]} color="#6B7280" lineWidth={2} />
-      <Line points={[[-2, 1.3, 0], [0, 0.7, 0]]} color="#6B7280" lineWidth={2} />
+      <Line points={[[-2, 1.3, 0], [-1, 1.0, 0], [0, 0.7, 0]]} color="#6B7280" lineWidth={2} />
       <Line points={[[0, 0.7, 0], [0, 0.3, 0]]} color="#6B7280" lineWidth={2} />
       <Line points={[[0, 0.3, 0], [0, -0.2, 0]]} color="#6B7280" lineWidth={2} />
       <Line points={[[0, -0.2, 0], [0, -0.8, 0]]} color="#6B7280" lineWidth={2} />
       <Line points={[[0, -0.8, 0], [0, -1.3, 0]]} color="#6B7280" lineWidth={2} />
-      <Line points={[[0, -1.3, 0], [-2, -1.7, 0]]} color="#6B7280" lineWidth={2} />
+      <Line points={[[0, -1.3, 0], [-1, -1.5, 0], [-2, -1.7, 0]]} color="#6B7280" lineWidth={2} />
     </group>
   )
 }
@@ -413,55 +413,95 @@ function AIMLAnimation({ isPaused }: { isPaused: boolean }) {
     <group>
       {/* Data Collection */}
       <group position={[-2.5, 1, 0]}>
-        <IconMesh icon={Database} position={[0, 0, 0]} color="#3B82F6" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#1E40AF" anchorX="center" anchorY="middle">
+        <IconMesh icon={Database} position={[0, 0.2, 0]} color="#3B82F6" />
+        <Text position={[0, 0.5, 0]} fontSize={0.06} color="#1E40AF" anchorX="center" anchorY="middle">
           Data Collection
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#1E40AF" anchorX="center" anchorY="middle">
-          Raw Data
+        <IconMesh icon={BarChart3} position={[-0.4, -0.1, 0]} size={0.5} color="#10B981" />
+        <Text position={[-0.4, -0.25, 0]} fontSize={0.03} color="#047857" anchorX="center" anchorY="middle">
+          Pandas
+        </Text>
+        <IconMesh icon={Activity} position={[0.4, -0.1, 0]} size={0.5} color="#F59E0B" />
+        <Text position={[0.4, -0.25, 0]} fontSize={0.03} color="#92400E" anchorX="center" anchorY="middle">
+          NumPy
+        </Text>
+        <Text position={[0, -0.4, 0]} fontSize={0.04} color="#1E40AF" anchorX="center" anchorY="middle">
+          Raw Data Sources
         </Text>
       </group>
 
       {/* Data Preprocessing */}
       <group position={[-1, 1, 0]}>
-        <IconMesh icon={Cpu} position={[0, 0, 0]} color="#F59E0B" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#92400E" anchorX="center" anchorY="middle">
+        <IconMesh icon={Cpu} position={[0, 0.2, 0]} color="#F59E0B" />
+        <Text position={[0, 0.5, 0]} fontSize={0.06} color="#92400E" anchorX="center" anchorY="middle">
           Preprocessing
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+        <IconMesh icon={BarChart3} position={[-0.4, -0.1, 0]} size={0.5} color="#3B82F6" />
+        <Text position={[-0.4, -0.25, 0]} fontSize={0.03} color="#1E40AF" anchorX="center" anchorY="middle">
+          Scikit-learn
+        </Text>
+        <IconMesh icon={Settings} position={[0.4, -0.1, 0]} size={0.5} color="#10B981" />
+        <Text position={[0.4, -0.25, 0]} fontSize={0.03} color="#047857" anchorX="center" anchorY="middle">
+          Feature Eng.
+        </Text>
+        <Text position={[0, -0.4, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
           Clean & Transform
         </Text>
       </group>
 
       {/* Model Training */}
       <group position={[-1, -1, 0]}>
-        <IconMesh icon={Activity} position={[0, 0, 0]} color="#10B981" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#047857" anchorX="center" anchorY="middle">
+        <IconMesh icon={Activity} position={[0, 0.2, 0]} color="#10B981" />
+        <Text position={[0, 0.5, 0]} fontSize={0.06} color="#047857" anchorX="center" anchorY="middle">
           Training
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
-          Neural Network
+        <IconMesh icon={Code} position={[-0.4, -0.1, 0]} size={0.5} color="#FF6B35" />
+        <Text position={[-0.4, -0.25, 0]} fontSize={0.03} color="#B45309" anchorX="center" anchorY="middle">
+          TensorFlow
+        </Text>
+        <IconMesh icon={Zap} position={[0.4, -0.1, 0]} size={0.5} color="#8B5CF6" />
+        <Text position={[0.4, -0.25, 0]} fontSize={0.03} color="#6D28D9" anchorX="center" anchorY="middle">
+          PyTorch
+        </Text>
+        <Text position={[0, -0.4, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          Neural Networks
         </Text>
       </group>
 
       {/* Trained Model */}
       <group position={[0.5, -1, 0]}>
-        <IconMesh icon={Box} position={[0, 0, 0]} color="#8B5CF6" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#6D28D9" anchorX="center" anchorY="middle">
+        <IconMesh icon={Box} position={[0, 0.2, 0]} color="#8B5CF6" />
+        <Text position={[0, 0.5, 0]} fontSize={0.06} color="#6D28D9" anchorX="center" anchorY="middle">
           Model
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
+        <IconMesh icon={HardDrive} position={[-0.4, -0.1, 0]} size={0.5} color="#F59E0B" />
+        <Text position={[-0.4, -0.25, 0]} fontSize={0.03} color="#92400E" anchorX="center" anchorY="middle">
+          Saved Model
+        </Text>
+        <IconMesh icon={Network} position={[0.4, -0.1, 0]} size={0.5} color="#10B981" />
+        <Text position={[0.4, -0.25, 0]} fontSize={0.03} color="#047857" anchorX="center" anchorY="middle">
+          ONNX
+        </Text>
+        <Text position={[0, -0.4, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
           TensorFlow/PyTorch
         </Text>
       </group>
 
       {/* Deployment */}
       <group position={[0.5, 1, 0]}>
-        <IconMesh icon={Server} position={[0, 0, 0]} color="#EF4444" />
-        <Text position={[0, 0.4, 0]} fontSize={0.06} color="#DC2626" anchorX="center" anchorY="middle">
+        <IconMesh icon={Server} position={[0, 0.2, 0]} color="#EF4444" />
+        <Text position={[0, 0.5, 0]} fontSize={0.06} color="#DC2626" anchorX="center" anchorY="middle">
           Deployment
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
+        <IconMesh icon={Globe} position={[-0.4, -0.1, 0]} size={0.5} color="#3B82F6" />
+        <Text position={[-0.4, -0.25, 0]} fontSize={0.03} color="#1E40AF" anchorX="center" anchorY="middle">
+          FastAPI
+        </Text>
+        <IconMesh icon={Container} position={[0.4, -0.1, 0]} size={0.5} color="#2496ED" />
+        <Text position={[0.4, -0.25, 0]} fontSize={0.03} color="#1D4ED8" anchorX="center" anchorY="middle">
+          Docker
+        </Text>
+        <Text position={[0, -0.4, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
           API/Inference
         </Text>
       </group>
@@ -610,7 +650,7 @@ function DevOpsAnimation({ isPaused }: { isPaused: boolean }) {
       <Line points={[[0.2, -1, 0], [0.5, -0.3, 0]]} color="#6B7280" lineWidth={2} />
       <Line points={[[0.5, -0.3, 0], [0.5, 0.3, 0]]} color="#6B7280" lineWidth={2} />
       <Line points={[[0.5, 0.3, 0], [0.5, 0.7, 0]]} color="#6B7280" lineWidth={2} />
-      <Line points={[[0.5, 0.7, 0], [1.8, 1, 0]]} color="#6B7280" lineWidth={2} />
+      <Line points={[[0.5, 0.7, 0], [1.2, 0.9, 0], [1.8, 1, 0]]} color="#6B7280" lineWidth={2} />
       <Line points={[[1.8, 1, 0], [2, 0.3, 0]]} color="#6B7280" lineWidth={2} />
       <Line points={[[2, 0.3, 0], [2, -0.3, 0]]} color="#6B7280" lineWidth={2} />
       <Line points={[[2, -0.3, 0], [1.2, -1, 0]]} color="#6B7280" lineWidth={2} />
