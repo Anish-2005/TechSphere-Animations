@@ -46,28 +46,35 @@ export function HeroSection() {
       
       {/* Animated background elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10"
-            style={{
-              width: Math.random() * 100 + 50,
-              height: Math.random() * 100 + 50,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, Math.random() * 100 - 50],
-              x: [0, Math.random() * 100 - 50],
-              rotate: [0, 360],
-            }}
-            transition={{
-              duration: Math.random() * 20 + 10,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-          />
-        ))}
+        {Array.from({ length: 20 }).map((_, i) => {
+          const rand = (n: number) => {
+            const x = Math.sin(n * 12.9898) * 43758.5453
+            return x - Math.floor(x)
+          }
+
+          const width = 50 + rand(i) * 100
+          const height = 50 + rand(i + 1) * 100
+          const topVal = rand(i + 2) * 100
+          const leftVal = rand(i + 3) * 100
+          // Use rounded integers for pixel values and fixed decimals for percentages
+          const widthPx = `${Math.round(width)}px`
+          const heightPx = `${Math.round(height)}px`
+          const top = `${topVal.toFixed(4)}%`
+          const left = `${leftVal.toFixed(4)}%`
+          const animateY = [0, Math.round(rand(i + 4) * 100 - 50)]
+          const animateX = [0, Math.round(rand(i + 5) * 100 - 50)]
+          const duration = parseFloat((rand(i + 6) * 20 + 10).toFixed(3))
+
+          return (
+            <motion.div
+              key={i}
+              className="absolute rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10"
+              style={{ width: widthPx, height: heightPx, top, left }}
+              animate={{ y: animateY, x: animateX, rotate: [0, 360] }}
+              transition={{ duration, repeat: Infinity, repeatType: "reverse" }}
+            />
+          )
+        })}
       </div>
     </div>
   )

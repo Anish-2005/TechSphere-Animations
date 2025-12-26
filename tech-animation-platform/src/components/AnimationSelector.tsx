@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from 'framer-motion'
-import { Monitor, Cpu, Cloud, Smartphone, Database, Globe } from 'lucide-react'
+import { Monitor, Cpu, Cloud, Smartphone, Database, Globe, Shield, Zap, Code, Server } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const animations = [
@@ -11,6 +11,9 @@ const animations = [
   { id: 'mobile', title: 'Mobile Development', icon: Smartphone, color: 'from-purple-500 to-pink-500' },
   { id: 'database', title: 'Database Systems', icon: Database, color: 'from-yellow-500 to-amber-500' },
   { id: 'web3', title: 'Web3 & Blockchain', icon: Globe, color: 'from-violet-500 to-purple-500' },
+  { id: 'cybersecurity', title: 'Cybersecurity', icon: Shield, color: 'from-red-500 to-pink-500' },
+  { id: 'iot', title: 'IoT & Embedded', icon: Zap, color: 'from-indigo-500 to-blue-500' },
+  { id: 'backend', title: 'Backend Development', icon: Server, color: 'from-gray-500 to-slate-500' },
 ]
 
 interface AnimationSelectorProps {
