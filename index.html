@@ -114,10 +114,20 @@
             backdrop-filter: blur(10px);
         }
 
-        .leaf:hover {
-            transform: scale(1.2) rotate(0deg) !important;
-            z-index: 10;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        /* Overlay backdrop for details panel */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(2px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+            z-index: 99;
+        }
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         .leaf img {
@@ -336,6 +346,34 @@
             transform: scale(1.1);
         }
 
+        /* Search box */
+        .search-input {
+            padding: 10px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.06);
+            color: #e2e8f0;
+            outline: none;
+            width: 240px;
+        }
+
+        .search-input::placeholder {
+            color: #94a3b8;
+        }
+
+        @media (max-width: 480px) {
+            .search-input {
+                width: 160px;
+                padding: 6px 10px;
+            }
+        }
+
+        /* Highlight matching leaves */
+        .leaf.match {
+            outline: 3px solid rgba(16,185,129,0.9);
+            outline-offset: 2px;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             h1 {
@@ -550,6 +588,18 @@
                 border-radius: 15px;
             }
         }
+
+        /* Hover effects only on hover-capable devices */
+        @media (hover: hover) {
+            .leaf:hover {
+                transform: scale(1.2) rotate(0deg) !important;
+                z-index: 10;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            }
+        }
+        @media (hover: none) {
+            .leaf:hover { transform: none !important; }
+        }
     </style>
 </head>
 <body>
@@ -559,6 +609,7 @@
         <div class="controls">
             <button id="startBtn">🌱 Grow the Tree</button>
             <button id="resetBtn" disabled>🔄 Reset Tree</button>
+            <input id="searchInput" class="search-input" type="text" placeholder="Search tech..." />
         </div>
         
         <div class="tree">
@@ -754,553 +805,351 @@
                 <p>Select a technology to view details</p>
             </div>
         </div>
+        <!-- Overlay backdrop -->
+        <div class="overlay" id="overlay"></div>
     </div>
 
     <script>
-        const techDetails = {
-            html: {
-                title: "HTML5 - Markup Language",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>HTML5 is the standard markup language for creating web pages and applications.</p></div>
-                    <div class="details-section"><h3>🚀 Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>&lt;!DOCTYPE html&gt;<br>&lt;html&gt;...&lt;/html&gt;</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank">MDN HTML Docs</a></li></ul></div>
-                `
-            },
-            css: {
-                title: "CSS3 - Styling Language",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>CSS3 is the latest evolution of the Cascading Style Sheets language for styling web pages.</p></div>
-                    <div class="details-section"><h3>🚀 Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>body { color: #333; }</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank">MDN CSS Docs</a></li></ul></div>
-                `
-            },
-            javascript: {
-                title: "JavaScript - Programming Language",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>JavaScript is a versatile scripting language for web development, enabling dynamic content and interactivity.</p></div>
-                    <div class="details-section"><h3>🚀 Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>console.log('Hello, world!');</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">MDN JS Docs</a></li></ul></div>
-                `
-            },
-            react: {
-                title: "React - JS Library",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>React is a JavaScript library for building user interfaces using components.</p></div>
-                    <div class="details-section"><h3>🚀 Build Command</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>npx create-react-app my-app<br>cd my-app<br>npm start</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://react.dev/learn" target="_blank">React Docs</a></li></ul></div>
-                `
-            },
-            nextjs: {
-                title: "Next.js - React Framework",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Next.js is a React framework for server-side rendering and static site generation.</p></div>
-                    <div class="details-section"><h3>🚀 Build Command</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>npx create-next-app my-next-app<br>cd my-next-app<br>npm run dev</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://nextjs.org/docs" target="_blank">Next.js Docs</a></li></ul></div>
-                `
-            },
-            nodejs: {
-                title: "Node.js - JS Runtime",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Node.js is a runtime environment for executing JavaScript code server-side.</p></div>
-                    <div class="details-section"><h3>🚀 Build/Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>node app.js</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://nodejs.org/en/docs/" target="_blank">Node.js Docs</a></li></ul></div>
-                `
-            },
-            docker: {
-                title: "Docker - Container Platform",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Docker is a platform for developing, shipping, and running applications in containers.</p></div>
-                    <div class="details-section"><h3>🚀 Build/Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>docker build -t myapp .<br>docker run -p 8080:80 myapp</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://docs.docker.com/" target="_blank">Docker Docs</a></li></ul></div>
-                `
-            },
-            vue: {
-                title: "Vue.js - Progressive JS Framework",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Vue.js is a progressive JavaScript framework for building user interfaces.</p></div>
-                    <div class="details-section"><h3>🚀 Build Command</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>npm create vite@latest my-vue-app -- --template vue<br>cd my-vue-app<br>npm install<br>npm run dev</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://vuejs.org/guide/introduction.html" target="_blank">Vue Docs</a></li></ul></div>
-                `
-            },
-            angular: {
-                title: "Angular - Web Application Framework",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Angular is a TypeScript-based framework for building scalable web apps.</p></div>
-                    <div class="details-section"><h3>🚀 Build Command</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>npm install -g @angular/cli<br>ng new my-angular-app<br>cd my-angular-app<br>ng serve</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://angular.io/docs" target="_blank">Angular Docs</a></li></ul></div>
-                `
-            },
-            svelte: {
-                title: "Svelte - JS Compiler",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Svelte is a compiler that generates minimal JS for fast web apps.</p></div>
-                    <div class="details-section"><h3>🚀 Build Command</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>npm create vite@latest my-svelte-app -- --template svelte<br>cd my-svelte-app<br>npm install<br>npm run dev</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://svelte.dev/docs" target="_blank">Svelte Docs</a></li></ul></div>
-                `
-            },
-            express: {
-                title: "Express.js - Node.js Framework",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Express is a minimal and flexible Node.js web application framework.</p></div>
-                    <div class="details-section"><h3>🚀 Build Command</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>npm install express</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://expressjs.com/" target="_blank">Express Docs</a></li></ul></div>
-                `
-            },
-            python: {
-                title: "Python - Programming Language",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Python is a versatile, high-level programming language.</p></div>
-                    <div class="details-section"><h3>🚀 Build/Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>python script.py</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://docs.python.org/3/" target="_blank">Python Docs</a></li></ul></div>
-                `
-            },
-            django: {
-                title: "Django - Python Web Framework",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Django is a high-level Python web framework for rapid development.</p></div>
-                    <div class="details-section"><h3>🚀 Build Command</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>pip install django<br>django-admin startproject mysite<br>cd mysite<br>python manage.py runserver</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://docs.djangoproject.com/en/stable/" target="_blank">Django Docs</a></li></ul></div>
-                `
-            },
-            flask: {
-                title: "Flask - Python Microframework",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Flask is a lightweight Python web framework.</p></div>
-                    <div class="details-section"><h3>🚀 Build Command</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>pip install flask<br>python app.py</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://flask.palletsprojects.com/" target="_blank">Flask Docs</a></li></ul></div>
-                `
-            },
-            php: {
-                title: "PHP - Scripting Language",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>PHP is a popular server-side scripting language for web development.</p></div>
-                    <div class="details-section"><h3>🚀 Build/Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>php -S localhost:8000</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://www.php.net/docs.php" target="_blank">PHP Docs</a></li></ul></div>
-                `
-            },
-            laravel: {
-                title: "Laravel - PHP Framework",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Laravel is a PHP framework for web artisans.</p></div>
-                    <div class="details-section"><h3>🚀 Build Command</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>composer create-project laravel/laravel my-laravel-app<br>cd my-laravel-app<br>php artisan serve</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://laravel.com/docs" target="_blank">Laravel Docs</a></li></ul></div>
-                `
-            },
-            mongodb: {
-                title: "MongoDB - NoSQL Database",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>MongoDB is a document-oriented NoSQL database.</p></div>
-                    <div class="details-section"><h3>🚀 Build/Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>mongod</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://www.mongodb.com/docs/" target="_blank">MongoDB Docs</a></li></ul></div>
-                `
-            },
-            mysql: {
-                title: "MySQL - Relational Database",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>MySQL is a widely used open-source relational database.</p></div>
-                    <div class="details-section"><h3>🚀 Build/Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>mysqld</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://dev.mysql.com/doc/" target="_blank">MySQL Docs</a></li></ul></div>
-                `
-            },
-            postgresql: {
-                title: "PostgreSQL - Relational Database",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>PostgreSQL is a powerful, open-source object-relational database.</p></div>
-                    <div class="details-section"><h3>🚀 Build/Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>pg_ctl start</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://www.postgresql.org/docs/" target="_blank">PostgreSQL Docs</a></li></ul></div>
-                `
-            },
-            firebase: {
-                title: "Firebase - Backend Platform",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Firebase provides backend services for web and mobile apps.</p></div>
-                    <div class="details-section"><h3>🚀 Build/Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>npm install -g firebase-tools<br>firebase login<br>firebase init<br>firebase deploy</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://firebase.google.com/docs" target="_blank">Firebase Docs</a></li></ul></div>
-                `
-            },
-            redis: {
-                title: "Redis - In-memory Database",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Redis is an in-memory key-value store, often used for caching.</p></div>
-                    <div class="details-section"><h3>🚀 Build/Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>redis-server</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://redis.io/docs/" target="_blank">Redis Docs</a></li></ul></div>
-                `
-            },
-            sqlite: {
-                title: "SQLite - Embedded Database",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>SQLite is a lightweight, embedded SQL database engine.</p></div>
-                    <div class="details-section"><h3>🚀 Build/Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>sqlite3 mydb.sqlite</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://sqlite.org/docs.html" target="_blank">SQLite Docs</a></li></ul></div>
-                `
-            },
-            kubernetes: {
-                title: "Kubernetes - Container Orchestration",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Kubernetes automates deployment, scaling, and management of containers.</p></div>
-                    <div class="details-section"><h3>🚀 Build/Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>kubectl apply -f deployment.yaml</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://kubernetes.io/docs/" target="_blank">Kubernetes Docs</a></li></ul></div>
-                `
-            },
-            aws: {
-                title: "AWS - Cloud Platform",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>AWS provides cloud computing services and infrastructure.</p></div>
-                    <div class="details-section"><h3>🚀 Build/Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>aws configure<br>aws s3 ls</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://docs.aws.amazon.com/" target="_blank">AWS Docs</a></li></ul></div>
-                `
-            },
-            azure: {
-                title: "Azure - Cloud Platform",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Azure is Microsoft's cloud computing platform.</p></div>
-                    <div class="details-section"><h3>🚀 Build/Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>az login<br>az webapp up</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://docs.microsoft.com/en-us/azure/" target="_blank">Azure Docs</a></li></ul></div>
-                `
-            },
-            jenkins: {
-                title: "Jenkins - Automation Server",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Jenkins is an open-source automation server for CI/CD.</p></div>
-                    <div class="details-section"><h3>🚀 Build/Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>java -jar jenkins.war</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://www.jenkins.io/doc/" target="_blank">Jenkins Docs</a></li></ul></div>
-                `
-            },
-            nginx: {
-                title: "Nginx - Web Server",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Nginx is a high-performance web server and reverse proxy.</p></div>
-                    <div class="details-section"><h3>🚀 Build/Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>nginx -c /etc/nginx/nginx.conf</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://nginx.org/en/docs/" target="_blank">Nginx Docs</a></li></ul></div>
-                `
-            },
-            figma: {
-                title: "Figma - Design Tool",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Figma is a cloud-based design and prototyping tool.</p></div>
-                    <div class="details-section"><h3>🚀 Usage</h3><p>Sign up and use in browser or desktop app.</p></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://help.figma.com/hc/en-us" target="_blank">Figma Docs</a></li></ul></div>
-                `
-            },
-            "adobe-xd": {
-                title: "Adobe XD - Design Tool",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/xd/xd-plain.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Adobe XD is a vector-based user experience design tool.</p></div>
-                    <div class="details-section"><h3>🚀 Usage</h3><p>Download and use via Adobe Creative Cloud.</p></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://helpx.adobe.com/xd/user-guide.html" target="_blank">Adobe XD Docs</a></li></ul></div>
-                `
-            },
-            sketch: {
-                title: "Sketch - Design Tool",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sketch/sketch-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Sketch is a digital design toolkit for macOS.</p></div>
-                    <div class="details-section"><h3>🚀 Usage</h3><p>Download and use on macOS.</p></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://www.sketch.com/docs/" target="_blank">Sketch Docs</a></li></ul></div>
-                `
-            },
-            photoshop: {
-                title: "Photoshop - Image Editor",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Adobe Photoshop is a powerful image editing software.</p></div>
-                    <div class="details-section"><h3>🚀 Usage</h3><p>Download and use via Adobe Creative Cloud.</p></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://helpx.adobe.com/photoshop/user-guide.html" target="_blank">Photoshop Docs</a></li></ul></div>
-                `
-            },
-            tailwind: {
-                title: "Tailwind CSS - Utility-first CSS Framework",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Tailwind CSS is a utility-first CSS framework for rapid UI development.</p></div>
-                    <div class="details-section"><h3>🚀 Build Command</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>npm install -D tailwindcss<br>npx tailwindcss init</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://tailwindcss.com/docs" target="_blank">Tailwind Docs</a></li></ul></div>
-                `
-            },
-            git: {
-                title: "Git - Version Control",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Git is a distributed version control system for tracking changes in code.</p></div>
-                    <div class="details-section"><h3>🚀 Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>git init<br>git add .<br>git commit -m "Initial commit"</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://git-scm.com/doc" target="_blank">Git Docs</a></li></ul></div>
-                `
-            },
-            vscode: {
-                title: "VS Code - Code Editor",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Visual Studio Code is a free, open-source code editor by Microsoft.</p></div>
-                    <div class="details-section"><h3>🚀 Usage</h3><p>Download and install from official site.</p></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://code.visualstudio.com/docs" target="_blank">VS Code Docs</a></li></ul></div>
-                `
-            },
-            github: {
-                title: "GitHub - Code Hosting",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>GitHub is a platform for hosting and collaborating on code projects.</p></div>
-                    <div class="details-section"><h3>🚀 Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>git remote add origin &lt;repo-url&gt;<br>git push -u origin main</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://docs.github.com/en" target="_blank">GitHub Docs</a></li></ul></div>
-                `
-            },
-            npm: {
-                title: "npm - Node Package Manager",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>npm is the default package manager for Node.js projects.</p></div>
-                    <div class="details-section"><h3>🚀 Usage</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>npm install &lt;package&gt;</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://docs.npmjs.com/" target="_blank">npm Docs</a></li></ul></div>
-                `
-            },
-            webpack: {
-                title: "Webpack - Module Bundler",
-                icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/webpack/webpack-original.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Webpack is a static module bundler for modern JavaScript applications.</p></div>
-                    <div class="details-section"><h3>🚀 Build Command</h3><div class="command-block"><button class="copy-btn" onclick="copyToClipboard(this)">Copy</button><code>npm install --save-dev webpack webpack-cli<br>npx webpack</code></div></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://webpack.js.org/concepts/" target="_blank">Webpack Docs</a></li></ul></div>
-                `
-            },
-            postman: {
-                title: "Postman - API Platform",
-                icon: "https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg",
-                content: `
-                    <div class="details-section"><h3>📋 Overview</h3><p>Postman is a platform for building, testing, and documenting APIs.</p></div>
-                    <div class="details-section"><h3>🚀 Usage</h3><p>Download and use desktop or web app.</p></div>
-                    <div class="details-section"><h3>📚 Resources</h3><ul><li><a href="https://learning.postman.com/docs/" target="_blank">Postman Docs</a></li></ul></div>
-                `
+        // Define categories globally for consistent layout
+        const categories = ['frontend', 'backend', 'database', 'devops', 'ux', 'tools'];
+
+        // Viewport-aware layout values
+        const layout = { branchLength: 400, baseTop: 400, labelOffset: 40 };
+
+        // Compute responsive layout from current viewport and trunk size
+        function computeLayout() {
+            const tree = document.querySelector('.tree');
+            const trunk = document.querySelector('.trunk');
+            if (!tree || !trunk) return;
+            const treeRect = tree.getBoundingClientRect();
+            const trunkH = parseFloat(getComputedStyle(trunk).height) || 350;
+            const minSide = Math.min(treeRect.width || window.innerWidth, treeRect.height || window.innerHeight);
+            layout.branchLength = Math.max(110, Math.min(0.38 * minSide, 460));
+            layout.baseTop = Math.max(60, trunkH * 0.8);
+            layout.labelOffset = Math.max(24, Math.min(layout.branchLength * 0.18, 80));
+        }
+
+        // Position animated category labels radially around the tree
+        function positionCategoryLabels() {
+            const cats = ['frontend', 'backend', 'database', 'devops', 'ux', 'tools'];
+            const branchCount = cats.length;
+            cats.forEach((cat, index) => {
+                const label = document.getElementById(cat + '-label');
+                if (!label) return;
+                const angle = (360 / branchCount) * index - 90;
+                const rad = angle * Math.PI / 180;
+                const r = layout.branchLength + layout.labelOffset;
+                label.style.left = `calc(50% + ${Math.cos(rad) * r}px)`;
+                label.style.top = `${layout.baseTop + Math.sin(rad) * r}px`;
+            });
+        }
+
+        // Refit grown branches/leaves without re-animating (used on resize)
+        function repositionGrownTree() {
+            const cats = ['frontend', 'backend', 'database', 'devops', 'ux', 'tools'];
+            const branchCount = cats.length;
+            cats.forEach((category, index) => {
+                const branch = document.getElementById(category + '-branch');
+                const angle = (360 / branchCount) * index - 90;
+                if (branch && (parseFloat(getComputedStyle(branch).width) || 0) > 0.5) {
+                    branch.style.left = '50%';
+                    branch.style.top = `${layout.baseTop}px`;
+                    branch.style.width = `${layout.branchLength}px`;
+                    branch.style.transform = `rotate(${angle}deg)`;
+                }
+                const leaves = document.querySelectorAll(`.leaf[data-category="${category}"]`);
+                const rad = angle * Math.PI / 180;
+                leaves.forEach((leaf, i) => {
+                    const distance = (layout.branchLength / (leaves.length + 1)) * (i + 1);
+                    const x = Math.cos(rad) * distance;
+                    const y = Math.sin(rad) * distance;
+                    leaf.style.left = `calc(50% + ${x}px)`;
+                    leaf.style.top = `${layout.baseTop + y}px`;
+                });
+            });
+            positionCategoryLabels();
+        }
+
+        // Debounced resize keeping the tree in view
+        if (!window.__treeResizeAttached) {
+            window.__treeResizeAttached = true;
+            let t;
+            window.addEventListener('resize', () => {
+                clearTimeout(t);
+                t = setTimeout(() => { computeLayout(); repositionGrownTree(); }, 120);
+            });
+        }
+
+        // Hook computeLayout into animation start
+        if (typeof startAnimation === 'function' && !startAnimation.__layoutPatched) {
+            const __origStart = startAnimation;
+            window.startAnimation = function() {
+                computeLayout();
+                positionCategoryLabels();
+                return __origStart();
+            };
+            window.startAnimation.__layoutPatched = true;
+        }
+
+        // Replace fixed sizes in growBranch with layout-powered values
+        if (typeof growBranch === 'function' && !growBranch.__layoutPatched) {
+            window.growBranch = function(category, index) {
+                const branch = document.getElementById(category + '-branch');
+                const branchCount = 6;
+                const angle = (360 / branchCount) * index - 90;
+                branch.style.left = '50%';
+                branch.style.top = `${layout.baseTop}px`;
+                branch.style.width = `${layout.branchLength}px`;
+                branch.style.transform = `rotate(${angle}deg)`;
+                branch.style.transition = 'width 1s ease-out';
+            };
+            window.growBranch.__layoutPatched = true;
+        }
+
+        // Replace fixed sizes in animateLeaves with layout-powered values
+        if (typeof animateLeaves === 'function' && !animateLeaves.__layoutPatched) {
+            window.animateLeaves = function(category, branchIndex) {
+                const leaves = document.querySelectorAll(`.leaf[data-category="${category}"]`);
+                const branchCount = 6;
+                const angle = (360 / branchCount) * branchIndex - 90;
+                const rad = angle * Math.PI / 180;
+                leaves.forEach((leaf, i) => {
+                    setTimeout(() => {
+                        const distance = (layout.branchLength / (leaves.length + 1)) * (i + 1);
+                        const x = Math.cos(rad) * distance;
+                        const y = Math.sin(rad) * distance;
+                        leaf.style.left = `calc(50% + ${x}px)`;
+                        leaf.style.top = `${layout.baseTop + y}px`;
+                        leaf.style.opacity = '1';
+                        leaf.style.transform = 'scale(1) rotate(0deg)';
+                    }, i * 200);
+                });
+            };
+            window.animateLeaves.__layoutPatched = true;
+        }
+
+        // Overlay integration for details panel
+        const overlay = document.getElementById('overlay');
+        if (typeof showTechDetails === 'function' && !showTechDetails.__overlayPatched) {
+            const __origShow = showTechDetails;
+            window.showTechDetails = function(techId) {
+                __origShow(techId);
+                if (overlay) overlay.classList.add('active');
+            };
+            window.showTechDetails.__overlayPatched = true;
+        }
+        if (typeof closeBtn !== 'undefined' && closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                if (overlay) overlay.classList.remove('active');
+            });
+        }
+        if (overlay) {
+            overlay.addEventListener('click', () => {
+                const panel = document.getElementById('detailsPanel');
+                if (panel) panel.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const panel = document.getElementById('detailsPanel');
+                if (panel && panel.classList.contains('active')) {
+                    panel.classList.remove('active');
+                    if (overlay) overlay.classList.remove('active');
+                }
             }
-        };
+        });
 
-        // Add details for all other technologies...
-        const allTechIds = ['vue', 'angular', 'svelte', 'express', 'python', 'django', 'flask', 'php', 'laravel', 
-                           'mongodb', 'mysql', 'postgresql', 'firebase', 'redis', 'sqlite', 'kubernetes', 'aws', 
-                           'azure', 'jenkins', 'nginx', 'figma', 'adobe-xd', 'sketch', 'photoshop', 'tailwind', 
-                           'git', 'vscode', 'github', 'npm', 'webpack', 'postman', 'javascript'];
+        // Add search filtering
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput && !searchInput.__wired) {
+            searchInput.addEventListener('input', () => {
+                const q = searchInput.value.trim().toLowerCase();
+                const leaves = Array.from(document.querySelectorAll('.leaf'));
+                const byCat = { frontend:0, backend:0, database:0, devops:0, ux:0, tools:0 };
+                leaves.forEach(leaf => {
+                    const text = leaf.textContent.trim().toLowerCase();
+                    const match = q.length === 0 || text.includes(q);
+                    leaf.style.display = match ? 'flex' : 'none';
+                    leaf.classList.toggle('match', !!q && match);
+                    if (match) byCat[leaf.dataset.category]++;
+                });
+                // Toggle category labels visibility/intensity based on matches
+                Object.keys(byCat).forEach(cat => {
+                    const label = document.getElementById(cat + '-label');
+                    if (!label) return;
+                    if (q.length === 0) {
+                        label.style.opacity = '1';
+                    } else {
+                        label.style.opacity = byCat[cat] > 0 ? '1' : '0.2';
+                    }
+                });
+            });
+            searchInput.__wired = true;
+        }
 
-        // DOM elements
+        // Initial layout compute so labels/branches start in correct positions
+        try {
+            computeLayout();
+            positionCategoryLabels();
+        } catch (_) { /* no-op if functions not defined yet */ }
+
+        // Core animation and interactions
         const startBtn = document.getElementById('startBtn');
         const resetBtn = document.getElementById('resetBtn');
-        const closeBtn = document.getElementById('closeBtn');
         const detailsPanel = document.getElementById('detailsPanel');
         const detailTitle = document.getElementById('detailTitle');
-        const detailContent = document.getElementById('detailContent');
         const detailIcon = document.getElementById('detailIcon');
+        const detailContent = document.getElementById('detailContent');
+        const closeBtn = document.getElementById('closeBtn');
 
-        // Animation variables
-        let currentStep = 0;
-        let isAnimating = false;
-
-        // Event listeners
-        startBtn.addEventListener('click', startAnimation);
-        resetBtn.addEventListener('click', resetAnimation);
-        closeBtn.addEventListener('click', () => {
-            detailsPanel.classList.remove('active');
-        });
-
-        // Add click event to all leaves
-        document.querySelectorAll('.leaf').forEach(leaf => {
-            leaf.addEventListener('click', () => {
-                const techId = leaf.id;
-                showTechDetails(techId);
+        function setLabelsOpacity(val) {
+            categories.forEach(cat => {
+                const label = document.getElementById(cat + '-label');
+                if (label) label.style.opacity = String(val);
             });
-        });
+        }
 
         function showTechDetails(techId) {
-            const tech = techDetails[techId];
-            if (tech) {
-                detailTitle.textContent = tech.title;
-                detailIcon.src = tech.icon;
-                detailContent.innerHTML = tech.content;
-                detailsPanel.classList.add('active');
-            } else {
-                // Default content for technologies without detailed info
-                detailTitle.textContent = techId.charAt(0).toUpperCase() + techId.slice(1);
-                detailIcon.src = '';
+            const leaf = document.getElementById(techId);
+            if (!leaf) return;
+            const title = (leaf.textContent || '').trim();
+            const img = leaf.querySelector('img');
+            if (detailTitle) detailTitle.textContent = title || 'Technology Details';
+            if (detailIcon && img) { detailIcon.src = img.src; detailIcon.alt = title; }
+            if (detailContent) {
+                const cat = leaf.dataset.category || '';
                 detailContent.innerHTML = `
                     <div class="details-section">
-                        <h3>📋 Overview</h3>
-                        <p>This is a popular technology in the ${getCategory(techId)} stack. Click on other technologies to learn more!</p>
+                        <h3>Overview</h3>
+                        <p><strong>${title}</strong> is part of the <strong>${cat.toUpperCase()}</strong> branch in this tree. Explore official docs and starter guides to dive deeper.</p>
+                    </div>
+                    <div class="details-section">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li>Search: <a href="https://www.google.com/search?q=${encodeURIComponent(title + ' official docs')}" target="_blank" rel="noreferrer">${title} official docs</a></li>
+                            <li>Awesome lists: <a href="https://github.com/sindresorhus/awesome" target="_blank" rel="noreferrer">Curated resources</a></li>
+                        </ul>
                     </div>
                 `;
-                detailsPanel.classList.add('active');
             }
-        }
-
-        function getCategory(techId) {
-            const leaf = document.getElementById(techId);
-            return leaf ? leaf.dataset.category : 'development';
-        }
-
-        function copyToClipboard(button) {
-            const code = button.nextElementSibling.textContent;
-            navigator.clipboard.writeText(code.replace(/<br>/g, '\n')).then(() => {
-                button.textContent = 'Copied!';
-                setTimeout(() => {
-                    button.textContent = 'Copy';
-                }, 2000);
-            });
-        }
-
-        function startAnimation() {
-            if (isAnimating) return;
-            
-            startBtn.disabled = true;
-            isAnimating = true;
-            
-            const categories = ['frontend', 'backend', 'database', 'devops', 'ux', 'tools'];
-            
-            categories.forEach((category, index) => {
-                setTimeout(() => {
-                    growBranch(category, index);
-                    setTimeout(() => {
-                        showCategoryLabel(category + '-label');
-                        setTimeout(() => {
-                            animateLeaves(category, index);
-                            setTimeout(() => {
-                                hideCategoryLabel(category + '-label');
-                            }, 2000);
-                        }, 500);
-                    }, 300);
-                }, index * 2000);
-            });
-            
-            setTimeout(() => {
-                resetBtn.disabled = false;
-                isAnimating = false;
-            }, categories.length * 2000 + 1000);
+            if (detailsPanel) detailsPanel.classList.add('active');
         }
 
         function growBranch(category, index) {
             const branch = document.getElementById(category + '-branch');
-            const branchCount = 6;
+            if (!branch) return;
+            const branchCount = categories.length;
             const angle = (360 / branchCount) * index - 90;
-            // Responsive branch length and top
-            let length = 400;
-            let top = 400;
-            if (window.innerWidth <= 480) {
-                length = 120;
-                top = 80;
-            } else if (window.innerWidth <= 768) {
-                length = 220;
-                top = 180;
-            }
+            // place branch
             branch.style.left = '50%';
-            branch.style.top = `${top}px`;
-            branch.style.width = `${length}px`;
+            branch.style.top = `${layout.baseTop}px`;
             branch.style.transform = `rotate(${angle}deg)`;
-            branch.style.transition = 'width 1s ease-out';
+            branch.style.transition = 'width 900ms ease-out';
+            // animate width from 0 to full
+            branch.style.width = '0px';
+            // ensure transition kicks in
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    branch.style.width = `${layout.branchLength}px`;
+                });
+            });
         }
 
         function animateLeaves(category, branchIndex) {
-            const leaves = document.querySelectorAll(`.leaf[data-category="${category}"]`);
-            const branchCount = 6;
+            const leaves = Array.from(document.querySelectorAll(`.leaf[data-category="${category}"]`));
+            const branchCount = categories.length;
             const angle = (360 / branchCount) * branchIndex - 90;
-            // Responsive branch length and top
-            let branchLength = 400;
-            let baseTop = 400;
-            if (window.innerWidth <= 480) {
-                branchLength = 120;
-                baseTop = 80;
-            } else if (window.innerWidth <= 768) {
-                branchLength = 220;
-                baseTop = 180;
-            }
+            const rad = angle * Math.PI / 180;
             leaves.forEach((leaf, i) => {
+                // reset initial state
+                leaf.style.opacity = '0';
+                leaf.style.transform = 'scale(0) rotate(45deg)';
+                leaf.style.display = 'flex';
                 setTimeout(() => {
-                    const distance = (branchLength / (leaves.length + 1)) * (i + 1);
-                    const rad = angle * Math.PI / 180;
+                    const distance = (layout.branchLength / (leaves.length + 1)) * (i + 1);
                     const x = Math.cos(rad) * distance;
                     const y = Math.sin(rad) * distance;
                     leaf.style.left = `calc(50% + ${x}px)`;
-                    leaf.style.top = `${baseTop + y}px`;
+                    leaf.style.top = `${layout.baseTop + y}px`;
                     leaf.style.opacity = '1';
                     leaf.style.transform = 'scale(1) rotate(0deg)';
-                }, i * 200);
+                }, i * 180 + 150);
             });
         }
 
-        function showCategoryLabel(labelId) {
-            const label = document.getElementById(labelId);
-            if (label) label.style.opacity = '1';
-        }
-
-        function hideCategoryLabel(labelId) {
-            const label = document.getElementById(labelId);
-            if (label) label.style.opacity = '0';
-        }
-
-        function resetAnimation() {
-            // Reset branches
-            document.querySelectorAll('.branch').forEach(branch => {
-                branch.style.width = '0';
-                branch.style.transition = 'none';
-                branch.style.top = '';
+        function startAnimation() {
+            if (startBtn) startBtn.disabled = true;
+            if (resetBtn) resetBtn.disabled = false;
+            computeLayout();
+            positionCategoryLabels();
+            setLabelsOpacity(1);
+            categories.forEach((category, index) => {
+                setTimeout(() => {
+                    growBranch(category, index);
+                    setTimeout(() => animateLeaves(category, index), 950);
+                }, index * 180);
             });
+            // wire leaf clicks once
+            const leaves = document.querySelectorAll('.leaf');
+            leaves.forEach(leaf => {
+                if (!leaf.__wiredClick) {
+                    leaf.addEventListener('click', () => showTechDetails(leaf.id));
+                    leaf.__wiredClick = true;
+                }
+            });
+        }
 
-            // Reset leaves
-            document.querySelectorAll('.leaf').forEach(leaf => {
+        function resetTree() {
+            if (startBtn) startBtn.disabled = false;
+            if (resetBtn) resetBtn.disabled = true;
+            // reset branches
+            categories.forEach(category => {
+                const branch = document.getElementById(category + '-branch');
+                if (branch) {
+                    branch.style.transition = 'none';
+                    branch.style.width = '0px';
+                    // force reflow then restore transition
+                    void branch.offsetWidth;
+                    branch.style.transition = 'width 900ms ease-out';
+                }
+            });
+            // reset leaves
+            const leaves = document.querySelectorAll('.leaf');
+            leaves.forEach(leaf => {
                 leaf.style.opacity = '0';
                 leaf.style.transform = 'scale(0) rotate(45deg)';
-                leaf.style.transition = 'none';
                 leaf.style.left = '';
                 leaf.style.top = '';
+                leaf.style.display = 'flex';
+                leaf.classList.remove('match');
             });
-
-            // Reset labels
-            document.querySelectorAll('.category-label').forEach(label => {
-                label.style.opacity = '0';
-            });
-
-            // Reset state
-            currentStep = 0;
-            isAnimating = false;
-            startBtn.disabled = false;
-            resetBtn.disabled = true;
-
-            // Force reflow
-            void document.querySelector('.trunk').offsetWidth;
-
-            // Re-enable transitions
-            setTimeout(() => {
-                document.querySelectorAll('.leaf').forEach(leaf => {
-                    leaf.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                });
-            }, 100);
+            // clear search
+            const searchInputEl = document.getElementById('searchInput');
+            if (searchInputEl) searchInputEl.value = '';
+            // hide details
+            if (detailsPanel) detailsPanel.classList.remove('active');
+            const overlayEl = document.getElementById('overlay');
+            if (overlayEl) overlayEl.classList.remove('active');
+            // labels subtle hide
+            setLabelsOpacity(0);
         }
 
-        // Initialize
-        resetAnimation();
+        if (startBtn && !startBtn.__wired) {
+            startBtn.addEventListener('click', startAnimation);
+            startBtn.__wired = true;
+        }
+        if (resetBtn && !resetBtn.__wired) {
+            resetBtn.addEventListener('click', resetTree);
+            resetBtn.__wired = true;
+        }
+
+        if (closeBtn && !closeBtn.__wired) {
+            closeBtn.addEventListener('click', () => {
+                if (detailsPanel) detailsPanel.classList.remove('active');
+            });
+            closeBtn.__wired = true;
+        }
     </script>
 </body>
 </html>
