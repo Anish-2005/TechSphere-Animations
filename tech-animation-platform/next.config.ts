@@ -11,8 +11,8 @@ interface WebpackRule {
 
 interface NextConfig {
   reactStrictMode: boolean;
-  swcMinify: boolean;
   images: ImagesConfig;
+  turbopack?: any;
   // avoid requiring webpack type declarations
   webpack?: (config: any) => any;
 }
