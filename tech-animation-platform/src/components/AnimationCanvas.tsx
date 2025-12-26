@@ -541,22 +541,22 @@ function DevOpsAnimation({ isPaused }: { isPaused: boolean }) {
     if (codeFlowRef.current) {
       const progress = (time * 0.3) % 6
       if (progress < 1) {
-        // Code Commit
+        // Development
         codeFlowRef.current.position.set(-2.5 + progress * 1.5, 1, 0)
       } else if (progress < 2) {
-        // Build
+        // Build & Package
         codeFlowRef.current.position.set(-1, 1 - (progress - 1) * 2, 0)
       } else if (progress < 3) {
-        // Test
+        // Testing & Quality
         codeFlowRef.current.position.set(-1 + (progress - 2) * 1.5, -1, 0)
       } else if (progress < 4) {
-        // Deploy
+        // Deploy & Infrastructure
         codeFlowRef.current.position.set(0.5, -1 + (progress - 3) * 2, 0)
       } else if (progress < 5) {
-        // Monitor
+        // Monitor & Observability
         codeFlowRef.current.position.set(0.5 + (progress - 4) * 1.5, 1, 0)
       } else {
-        // Feedback loop
+        // Security & Feedback
         codeFlowRef.current.position.set(2, 1 - (progress - 5) * 2, 0)
       }
     }
@@ -564,69 +564,135 @@ function DevOpsAnimation({ isPaused }: { isPaused: boolean }) {
 
   return (
     <group>
-      {/* Code Commit */}
+      {/* Development & Version Control */}
       <group position={[-2.5, 1, 0]}>
-        <IconMesh icon={GitBranch} position={[0, 0, 0]} color="#10B981" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#047857" anchorX="center" anchorY="middle">
-          Code Commit
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Development
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+        <IconMesh icon={GitBranch} position={[-0.6, 0, 0]} color="#F05032" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#B91C1C" anchorX="center" anchorY="middle">
           Git
         </Text>
+        <IconMesh icon={Code} position={[0, 0, 0]} color="#3178C6" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#1E40AF" anchorX="center" anchorY="middle">
+          VS Code
+        </Text>
+        <IconMesh icon={Workflow} position={[0.6, 0, 0]} color="#10B981" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          GitHub Actions
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Code Commit & PR
+        </Text>
       </group>
 
-      {/* Build */}
+      {/* Build & Package */}
       <group position={[-1, 1, 0]}>
-        <IconMesh icon={Box} position={[0, 0, 0]} color="#3B82F6" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#1E40AF" anchorX="center" anchorY="middle">
-          Build
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Build & Package
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#1E40AF" anchorX="center" anchorY="middle">
-          Jenkins/Docker
+        <IconMesh icon={Container} position={[-0.6, 0, 0]} color="#2496ED" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#1D4ED8" anchorX="center" anchorY="middle">
+          Docker
+        </Text>
+        <IconMesh icon={Box} position={[0, 0, 0]} color="#F59E0B" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          Jenkins
+        </Text>
+        <IconMesh icon={Settings} position={[0.6, 0, 0]} color="#8B5CF6" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
+          Maven/Gradle
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Compile & Containerize
         </Text>
       </group>
 
-      {/* Test */}
+      {/* Testing & Quality */}
       <group position={[-1, -1, 0]}>
-        <IconMesh icon={Activity} position={[0, 0, 0]} color="#F59E0B" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#92400E" anchorX="center" anchorY="middle">
-          Test
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Testing & Quality
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
-          Unit/Integration
+        <IconMesh icon={Activity} position={[-0.6, 0, 0]} color="#10B981" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          Jest
+        </Text>
+        <IconMesh icon={Shield} position={[0, 0, 0]} color="#EF4444" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
+          SonarQube
+        </Text>
+        <IconMesh icon={BarChart3} position={[0.6, 0, 0]} color="#3B82F6" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#1E40AF" anchorX="center" anchorY="middle">
+          Coverage
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Unit/Integration/E2E
         </Text>
       </group>
 
-      {/* Deploy */}
+      {/* Deployment & Infrastructure */}
       <group position={[0.5, -1, 0]}>
-        <IconMesh icon={Server} position={[0, 0, 0]} color="#EF4444" />
-        <Text position={[0, 0.4, 0]} fontSize={0.06} color="#DC2626" anchorX="center" anchorY="middle">
-          Deploy
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Deploy & Infra
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
+        <IconMesh icon={Network} position={[-0.6, 0, 0]} color="#326CE5" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#1E40AF" anchorX="center" anchorY="middle">
           Kubernetes
         </Text>
+        <IconMesh icon={Cloud} position={[0, 0, 0]} color="#FF9900" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#B45309" anchorX="center" anchorY="middle">
+          AWS/GCP
+        </Text>
+        <IconMesh icon={Server} position={[0.6, 0, 0]} color="#10B981" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          Terraform
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Infrastructure as Code
+        </Text>
       </group>
 
-      {/* Monitor */}
+      {/* Monitoring & Observability */}
       <group position={[0.5, 1, 0]}>
-        <IconMesh icon={Monitor} position={[0, 0, 0]} color="#8B5CF6" />
-        <Text position={[0, 0.4, 0]} fontSize={0.06} color="#6D28D9" anchorX="center" anchorY="middle">
-          Monitor
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Monitor & Observe
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
-          Prometheus/Grafana
+        <IconMesh icon={Monitor} position={[-0.6, 0, 0]} color="#8B5CF6" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#6D28D9" anchorX="center" anchorY="middle">
+          Grafana
+        </Text>
+        <IconMesh icon={Activity} position={[0, 0, 0]} color="#F59E0B" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#92400E" anchorX="center" anchorY="middle">
+          Prometheus
+        </Text>
+        <IconMesh icon={Eye} position={[0.6, 0, 0]} color="#EF4444" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
+          ELK Stack
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Logs, Metrics, Traces
         </Text>
       </group>
 
-      {/* Feedback Loop */}
+      {/* Security & Compliance */}
       <group position={[2, 1, 0]}>
-        <IconMesh icon={MessageSquare} position={[0, 0, 0]} color="#06B6D4" />
-        <Text position={[0, 0.3, 0]} fontSize={0.06} color="#0891B2" anchorX="center" anchorY="middle">
-          Feedback
+        <Text position={[0, 0.5, 0]} fontSize={0.08} color="#374151" anchorX="center" anchorY="middle" fontWeight="bold">
+          Security & Feedback
         </Text>
-        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#0891B2" anchorX="center" anchorY="middle">
-          Logs/Metrics
+        <IconMesh icon={Shield} position={[-0.6, 0, 0]} color="#DC2626" />
+        <Text position={[-0.6, -0.15, 0]} fontSize={0.04} color="#B91C1C" anchorX="center" anchorY="middle">
+          SAST/DAST
+        </Text>
+        <IconMesh icon={Lock} position={[0, 0, 0]} color="#059669" />
+        <Text position={[0, -0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
+          Vault
+        </Text>
+        <IconMesh icon={MessageSquare} position={[0.6, 0, 0]} color="#06B6D4" />
+        <Text position={[0.6, -0.15, 0]} fontSize={0.04} color="#0891B2" anchorX="center" anchorY="middle">
+          Slack/Jira
+        </Text>
+        <Text position={[0, -0.35, 0]} fontSize={0.04} color="#6B7280" anchorX="center" anchorY="middle">
+          Continuous Feedback
         </Text>
       </group>
 
@@ -637,7 +703,7 @@ function DevOpsAnimation({ isPaused }: { isPaused: boolean }) {
           <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.5} />
         </mesh>
         <Text position={[0, 0.15, 0]} fontSize={0.04} color="#047857" anchorX="center" anchorY="middle">
-          Code
+          Code Pipeline
         </Text>
       </group>
 
