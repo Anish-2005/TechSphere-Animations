@@ -510,6 +510,9 @@ function DevOpsAnimation() {
               {stage.shape === 'octahedron' && <octahedronGeometry args={[0.15, 0]} />}
               <meshStandardMaterial color={stage.color} emissive={stage.color} emissiveIntensity={0.4} />
             </mesh>
+            <Text position={[stage.x, 1.8, 0]} fontSize={0.06} color={stage.color} anchorX="center" anchorY="middle">
+              {stage.name}
+            </Text>
             
             {/* Pipeline connections */}
             {idx < pipelineStages.length - 1 && (
@@ -522,11 +525,23 @@ function DevOpsAnimation() {
           </group>
         ))}
         
-        {/* Code commit arrow */}
+        {/* Git (version control) */}
         <mesh position={[-2.5, 2, 0]}>
           <coneGeometry args={[0.08, 0.2, 8]} />
-          <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.5} />
+          <meshStandardMaterial color="#F05032" emissive="#F05032" emissiveIntensity={0.5} />
         </mesh>
+        <Text position={[-2.5, 2.3, 0]} fontSize={0.05} color="#F05032" anchorX="center" anchorY="middle">
+          Git
+        </Text>
+
+        {/* Jenkins CI */}
+        <mesh position={[-1.5, 2, 0]}>
+          <cylinderGeometry args={[0.08, 0.08, 0.15, 16]} />
+          <meshStandardMaterial color="#D24939" emissive="#D24939" emissiveIntensity={0.4} />
+        </mesh>
+        <Text position={[-1.5, 2.3, 0]} fontSize={0.05} color="#D24939" anchorX="center" anchorY="middle">
+          Jenkins
+        </Text>
       </group>
 
       {/* Container Orchestration */}
@@ -536,13 +551,23 @@ function DevOpsAnimation() {
           <cylinderGeometry args={[0.8, 0.8, 0.1, 32]} />
           <meshStandardMaterial color="#326CE5" emissive="#326CE5" emissiveIntensity={0.2} />
         </mesh>
+        <Text position={[0, -0.2, 0]} fontSize={0.07} color="#326CE5" anchorX="center" anchorY="middle">
+          Kubernetes
+        </Text>
         
         {/* Docker containers */}
         {containers.map((container, idx) => (
-          <mesh key={`container-${idx}`} position={container.position}>
-            <boxGeometry args={[0.2, 0.15, 0.1]} />
-            <meshStandardMaterial color={container.color} emissive={container.color} emissiveIntensity={0.3} />
-          </mesh>
+          <group key={`container-${idx}`}>
+            <mesh position={container.position}>
+              <boxGeometry args={[0.2, 0.15, 0.1]} />
+              <meshStandardMaterial color={container.color} emissive={container.color} emissiveIntensity={0.3} />
+            </mesh>
+            {idx === 0 && (
+              <Text position={[container.position[0], container.position[1] + 0.25, 0]} fontSize={0.05} color="#2496ED" anchorX="center" anchorY="middle">
+                Docker
+              </Text>
+            )}
+          </group>
         ))}
       </group>
 
@@ -553,39 +578,64 @@ function DevOpsAnimation() {
           <boxGeometry args={[0.4, 0.6, 0.2]} />
           <meshStandardMaterial color="#374151" emissive="#374151" emissiveIntensity={0.2} />
         </mesh>
+        <Text position={[-1, 0.8, 0]} fontSize={0.06} color="#FF9900" anchorX="center" anchorY="middle">
+          AWS EC2
+        </Text>
+
         <mesh position={[0, 0, 0]}>
           <boxGeometry args={[0.4, 0.6, 0.2]} />
           <meshStandardMaterial color="#4B5563" emissive="#4B5563" emissiveIntensity={0.2} />
         </mesh>
+        <Text position={[0, 0.8, 0]} fontSize={0.06} color="#007ACC" anchorX="center" anchorY="middle">
+          Azure VMs
+        </Text>
+
         <mesh position={[1, 0, 0]}>
           <boxGeometry args={[0.4, 0.6, 0.2]} />
           <meshStandardMaterial color="#6B7280" emissive="#6B7280" emissiveIntensity={0.2} />
         </mesh>
+        <Text position={[1, 0.8, 0]} fontSize={0.06} color="#4285F4" anchorX="center" anchorY="middle">
+          GCP
+        </Text>
         
         {/* Load balancer */}
         <mesh position={[0, 0.8, 0]}>
           <sphereGeometry args={[0.15, 16, 16]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[0, 1.1, 0]} fontSize={0.05} color="#F59E0B" anchorX="center" anchorY="middle">
+          Load Balancer
+        </Text>
       </group>
 
       {/* Monitoring & Logging */}
       <group ref={monitoringRef} position={[0, -2.5, 0]}>
-        {/* Metrics dashboard */}
+        {/* Prometheus metrics */}
         <mesh position={[-1, 0, 0]}>
           <boxGeometry args={[0.3, 0.4, 0.05]} />
-          <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.3} />
+          <meshStandardMaterial color="#E6522C" emissive="#E6522C" emissiveIntensity={0.3} />
         </mesh>
-        {/* Logs */}
+        <Text position={[-1, 0.5, 0]} fontSize={0.05} color="#E6522C" anchorX="center" anchorY="middle">
+          Prometheus
+        </Text>
+
+        {/* ELK Stack logs */}
         <mesh position={[0, 0, 0]}>
           <cylinderGeometry args={[0.2, 0.2, 0.3, 16]} />
-          <meshStandardMaterial color="#06B6D4" emissive="#06B6D4" emissiveIntensity={0.3} />
+          <meshStandardMaterial color="#0064D9" emissive="#0064D9" emissiveIntensity={0.3} />
         </mesh>
-        {/* Alerts */}
+        <Text position={[0, 0.5, 0]} fontSize={0.05} color="#0064D9" anchorX="center" anchorY="middle">
+          ELK Stack
+        </Text>
+
+        {/* Grafana alerts */}
         <mesh position={[1, 0, 0]}>
           <octahedronGeometry args={[0.15, 0]} />
-          <meshStandardMaterial color="#EF4444" emissive="#EF4444" emissiveIntensity={0.4} />
+          <meshStandardMaterial color="#F69D3A" emissive="#F69D3A" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[1, 0.3, 0]} fontSize={0.05} color="#F69D3A" anchorX="center" anchorY="middle">
+          Grafana
+        </Text>
       </group>
 
       {/* Data flow through pipeline */}
@@ -631,22 +681,36 @@ function MobileDevAnimation() {
           <boxGeometry args={[0.6, 1.2, 0.08]} />
           <meshStandardMaterial color="#000000" emissive="#000000" emissiveIntensity={0.1} />
         </mesh>
+        <Text position={[-2, 0.3, 0]} fontSize={0.06} color="#000000" anchorX="center" anchorY="middle">
+          iOS
+        </Text>
+
         {/* Swift/Objective-C */}
         <mesh position={[-2, 1.8, 0]}>
           <cylinderGeometry args={[0.15, 0.15, 0.2, 16]} />
           <meshStandardMaterial color="#FA7343" emissive="#FA7343" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[-2, 2.1, 0]} fontSize={0.05} color="#FA7343" anchorX="center" anchorY="middle">
+          Swift
+        </Text>
 
         {/* Android Device */}
         <mesh position={[-0.5, 1, 0]}>
           <boxGeometry args={[0.7, 1.4, 0.08]} />
           <meshStandardMaterial color="#3DDC84" emissive="#3DDC84" emissiveIntensity={0.2} />
         </mesh>
+        <Text position={[-0.5, 0.3, 0]} fontSize={0.06} color="#3DDC84" anchorX="center" anchorY="middle">
+          Android
+        </Text>
+
         {/* Kotlin/Java */}
         <mesh position={[-0.5, 1.8, 0]}>
           <sphereGeometry args={[0.15, 16, 16]} />
           <meshStandardMaterial color="#7F52FF" emissive="#7F52FF" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[-0.5, 2.1, 0]} fontSize={0.05} color="#7F52FF" anchorX="center" anchorY="middle">
+          Kotlin
+        </Text>
       </group>
 
       {/* Cross-Platform Frameworks */}
@@ -656,30 +720,45 @@ function MobileDevAnimation() {
           <boxGeometry args={[0.4, 0.3, 0.1]} />
           <meshStandardMaterial color="#61DAFB" emissive="#61DAFB" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[-1.5, 0.4, 0]} fontSize={0.05} color="#61DAFB" anchorX="center" anchorY="middle">
+          React Native
+        </Text>
 
         {/* Flutter */}
         <mesh position={[-0.5, 0, 0]}>
           <cylinderGeometry args={[0.2, 0.2, 0.3, 16]} />
           <meshStandardMaterial color="#02569B" emissive="#02569B" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[-0.5, 0.4, 0]} fontSize={0.05} color="#02569B" anchorX="center" anchorY="middle">
+          Flutter
+        </Text>
 
         {/* Ionic */}
         <mesh position={[0.5, 0, 0]}>
           <sphereGeometry args={[0.2, 16, 16]} />
           <meshStandardMaterial color="#3880FF" emissive="#3880FF" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[0.5, 0.4, 0]} fontSize={0.05} color="#3880FF" anchorX="center" anchorY="middle">
+          Ionic
+        </Text>
 
         {/* Xamarin */}
         <mesh position={[1.5, 0, 0]}>
           <octahedronGeometry args={[0.15, 0]} />
           <meshStandardMaterial color="#3498DB" emissive="#3498DB" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[1.5, 0.3, 0]} fontSize={0.05} color="#3498DB" anchorX="center" anchorY="middle">
+          Xamarin
+        </Text>
 
         {/* Shared Codebase */}
         <mesh position={[0, -0.5, 0]}>
           <boxGeometry args={[2, 0.1, 0.8]} />
           <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.2} />
         </mesh>
+        <Text position={[0, -0.8, 0]} fontSize={0.06} color="#10B981" anchorX="center" anchorY="middle">
+          Shared Codebase
+        </Text>
       </group>
 
       {/* API Integration */}
@@ -689,18 +768,27 @@ function MobileDevAnimation() {
           <sphereGeometry args={[0.15, 16, 16]} />
           <meshStandardMaterial color="#FF6B35" emissive="#FF6B35" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[-1, 0.3, 0]} fontSize={0.05} color="#FF6B35" anchorX="center" anchorY="middle">
+          REST API
+        </Text>
 
         {/* GraphQL */}
         <mesh position={[0, 0, 0]}>
           <coneGeometry args={[0.15, 0.25, 8]} />
           <meshStandardMaterial color="#E10098" emissive="#E10098" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[0, 0.4, 0]} fontSize={0.05} color="#E10098" anchorX="center" anchorY="middle">
+          GraphQL
+        </Text>
 
         {/* WebSocket */}
         <mesh position={[1, 0, 0]}>
           <cylinderGeometry args={[0.1, 0.1, 0.3, 16]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[1, 0.4, 0]} fontSize={0.05} color="#F59E0B" anchorX="center" anchorY="middle">
+          WebSocket
+        </Text>
       </group>
 
       {/* Device Features & Sensors */}
@@ -710,24 +798,36 @@ function MobileDevAnimation() {
           <sphereGeometry args={[0.1, 8, 8]} />
           <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[-1.5, 0.3, 0]} fontSize={0.05} color="#10B981" anchorX="center" anchorY="middle">
+          GPS
+        </Text>
 
         {/* Camera */}
         <mesh position={[-0.5, 0, 0]}>
           <cylinderGeometry args={[0.08, 0.08, 0.15, 8]} />
           <meshStandardMaterial color="#8B5CF6" emissive="#8B5CF6" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[-0.5, 0.3, 0]} fontSize={0.05} color="#8B5CF6" anchorX="center" anchorY="middle">
+          Camera
+        </Text>
 
         {/* Accelerometer */}
         <mesh position={[0.5, 0, 0]}>
           <boxGeometry args={[0.12, 0.08, 0.15]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[0.5, 0.3, 0]} fontSize={0.04} color="#F59E0B" anchorX="center" anchorY="middle">
+          Accelerometer
+        </Text>
 
         {/* Touch Screen */}
         <mesh position={[1.5, 0, 0]}>
           <boxGeometry args={[0.8, 1.2, 0.02]} />
           <meshStandardMaterial color="#06B6D4" emissive="#06B6D4" emissiveIntensity={0.2} />
         </mesh>
+        <Text position={[1.5, 0.3, 0]} fontSize={0.05} color="#06B6D4" anchorX="center" anchorY="middle">
+          Touch UI
+        </Text>
       </group>
 
       {/* Data Flow Connections */}
@@ -774,30 +874,52 @@ function DatabaseAnimation() {
           <cylinderGeometry args={[0.3, 0.3, 0.4, 16]} />
           <meshStandardMaterial color="#336791" emissive="#336791" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[-2, 1.5, 0]} fontSize={0.06} color="#336791" anchorX="center" anchorY="middle">
+          PostgreSQL
+        </Text>
+
         {/* MySQL */}
         <mesh position={[-1, 1, 0]}>
           <cylinderGeometry args={[0.3, 0.3, 0.4, 16]} />
           <meshStandardMaterial color="#4479A1" emissive="#4479A1" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[-1, 1.5, 0]} fontSize={0.06} color="#4479A1" anchorX="center" anchorY="middle">
+          MySQL
+        </Text>
+
         {/* SQL Server */}
         <mesh position={[-1.5, 0.5, 0]}>
           <boxGeometry args={[0.5, 0.3, 0.2]} />
           <meshStandardMaterial color="#CC2927" emissive="#CC2927" emissiveIntensity={0.2} />
         </mesh>
+        <Text position={[-1.5, 0.9, 0]} fontSize={0.06} color="#CC2927" anchorX="center" anchorY="middle">
+          SQL Server
+        </Text>
 
         {/* Tables with relationships */}
         <mesh position={[-2, 0, 0]}>
           <boxGeometry args={[0.2, 0.1, 0.4]} />
           <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.2} />
         </mesh>
+        <Text position={[-2, 0.25, 0]} fontSize={0.05} color="#10B981" anchorX="center" anchorY="middle">
+          Users Table
+        </Text>
+
         <mesh position={[-1, 0, 0]}>
           <boxGeometry args={[0.2, 0.1, 0.4]} />
           <meshStandardMaterial color="#3B82F6" emissive="#3B82F6" emissiveIntensity={0.2} />
         </mesh>
+        <Text position={[-1, 0.25, 0]} fontSize={0.05} color="#3B82F6" anchorX="center" anchorY="middle">
+          Orders Table
+        </Text>
+
         <mesh position={[-1.5, -0.5, 0]}>
           <boxGeometry args={[0.2, 0.1, 0.4]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.2} />
         </mesh>
+        <Text position={[-1.5, -0.25, 0]} fontSize={0.05} color="#F59E0B" anchorX="center" anchorY="middle">
+          Products Table
+        </Text>
 
         {/* Foreign key relationships */}
         <Line points={[[-2, 0, 0], [-1, 0, 0]]} color="#EF4444" lineWidth={2} />
@@ -811,26 +933,44 @@ function DatabaseAnimation() {
           <sphereGeometry args={[0.25, 16, 16]} />
           <meshStandardMaterial color="#47A248" emissive="#47A248" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[0, 1.4, 0]} fontSize={0.06} color="#47A248" anchorX="center" anchorY="middle">
+          MongoDB
+        </Text>
+
         {/* Cassandra */}
         <mesh position={[0.8, 1, 0]}>
           <octahedronGeometry args={[0.2, 0]} />
           <meshStandardMaterial color="#1287B1" emissive="#1287B1" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[0.8, 1.4, 0]} fontSize={0.06} color="#1287B1" anchorX="center" anchorY="middle">
+          Cassandra
+        </Text>
+
         {/* Redis */}
         <mesh position={[0.4, 0.3, 0]}>
           <cylinderGeometry args={[0.15, 0.15, 0.3, 16]} />
           <meshStandardMaterial color="#DC382D" emissive="#DC382D" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[0.4, 0.7, 0]} fontSize={0.06} color="#DC382D" anchorX="center" anchorY="middle">
+          Redis
+        </Text>
 
         {/* Documents/Collections */}
         <mesh position={[0, 0, 0]}>
           <boxGeometry args={[0.15, 0.08, 0.25]} />
           <meshStandardMaterial color="#8B5CF6" emissive="#8B5CF6" emissiveIntensity={0.2} />
         </mesh>
+        <Text position={[0, 0.2, 0]} fontSize={0.04} color="#8B5CF6" anchorX="center" anchorY="middle">
+          JSON Documents
+        </Text>
+
         <mesh position={[0.8, 0, 0]}>
           <boxGeometry args={[0.15, 0.08, 0.25]} />
           <meshStandardMaterial color="#06B6D4" emissive="#06B6D4" emissiveIntensity={0.2} />
         </mesh>
+        <Text position={[0.8, 0.2, 0]} fontSize={0.04} color="#06B6D4" anchorX="center" anchorY="middle">
+          Collections
+        </Text>
       </group>
 
       {/* Query Processing */}
@@ -840,16 +980,27 @@ function DatabaseAnimation() {
           <coneGeometry args={[0.12, 0.2, 8]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[-1, 0.3, 0]} fontSize={0.05} color="#F59E0B" anchorX="center" anchorY="middle">
+          SQL Query
+        </Text>
+
         {/* NoSQL Query */}
         <mesh position={[0, 0, 0]}>
           <sphereGeometry args={[0.12, 16, 16]} />
           <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[0, 0.3, 0]} fontSize={0.05} color="#10B981" anchorX="center" anchorY="middle">
+          NoSQL Query
+        </Text>
+
         {/* Query Optimizer */}
         <mesh position={[1, 0, 0]}>
           <octahedronGeometry args={[0.1, 0]} />
           <meshStandardMaterial color="#3B82F6" emissive="#3B82F6" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[1, 0.3, 0]} fontSize={0.05} color="#3B82F6" anchorX="center" anchorY="middle">
+          Query Optimizer
+        </Text>
       </group>
 
       {/* Caching Layer */}
@@ -859,20 +1010,35 @@ function DatabaseAnimation() {
           <cylinderGeometry args={[0.2, 0.2, 0.15, 16]} />
           <meshStandardMaterial color="#DC382D" emissive="#DC382D" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[-0.5, 0.25, 0]} fontSize={0.05} color="#DC382D" anchorX="center" anchorY="middle">
+          Redis Cache
+        </Text>
+
         {/* Memcached */}
         <mesh position={[0.5, 0, 0]}>
           <boxGeometry args={[0.25, 0.15, 0.1]} />
           <meshStandardMaterial color="#6C7B95" emissive="#6C7B95" emissiveIntensity={0.2} />
         </mesh>
+        <Text position={[0.5, 0.25, 0]} fontSize={0.05} color="#6C7B95" anchorX="center" anchorY="middle">
+          Memcached
+        </Text>
+
         {/* Cache Hit/Miss indicators */}
         <mesh position={[-0.5, 0.3, 0]}>
           <sphereGeometry args={[0.05, 8, 8]} />
           <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.8} />
         </mesh>
+        <Text position={[-0.5, 0.5, 0]} fontSize={0.04} color="#10B981" anchorX="center" anchorY="middle">
+          Cache Hit
+        </Text>
+
         <mesh position={[0.5, 0.3, 0]}>
           <sphereGeometry args={[0.05, 8, 8]} />
           <meshStandardMaterial color="#EF4444" emissive="#EF4444" emissiveIntensity={0.8} />
         </mesh>
+        <Text position={[0.5, 0.5, 0]} fontSize={0.04} color="#EF4444" anchorX="center" anchorY="middle">
+          Cache Miss
+        </Text>
       </group>
 
       {/* Data Flow Connections */}
@@ -928,6 +1094,9 @@ function Web3Animation() {
           <boxGeometry args={[0.5, 0.3, 0.5]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[0, 0.4, 0]} fontSize={0.06} color="#F59E0B" anchorX="center" anchorY="middle">
+          Genesis Block
+        </Text>
 
         {/* Blockchain blocks */}
         {Array.from({ length: 5 }, (_, i) => (
@@ -936,6 +1105,10 @@ function Web3Animation() {
               <boxGeometry args={[0.4, 0.2, 0.4]} />
               <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.3} />
             </mesh>
+            <Text position={[0, (i + 1) * 0.4 + 0.3, 0]} fontSize={0.04} color="#10B981" anchorX="center" anchorY="middle">
+              Block {i + 1}
+            </Text>
+
             {/* Block hash */}
             <mesh position={[0, (i + 1) * 0.4, 0.3]}>
               <sphereGeometry args={[0.05, 8, 8]} />
@@ -946,20 +1119,25 @@ function Web3Animation() {
 
         {/* Network nodes */}
         {nodes.map((node, idx) => (
-          <mesh key={`node-${idx}`} position={node.position}>
-            {node.type === 0 ? (
-              <octahedronGeometry args={[0.15, 0]} />
-            ) : node.type === 1 ? (
-              <cylinderGeometry args={[0.12, 0.12, 0.2, 8]} />
-            ) : (
-              <sphereGeometry args={[0.12, 8, 8]} />
-            )}
-            <meshStandardMaterial
-              color={node.type === 0 ? '#EF4444' : node.type === 1 ? '#F59E0B' : '#10B981'}
-              emissive={node.type === 0 ? '#EF4444' : node.type === 1 ? '#F59E0B' : '#10B981'}
-              emissiveIntensity={0.4}
-            />
-          </mesh>
+          <group key={`node-${idx}`}>
+            <mesh position={node.position}>
+              {node.type === 0 ? (
+                <octahedronGeometry args={[0.15, 0]} />
+              ) : node.type === 1 ? (
+                <cylinderGeometry args={[0.12, 0.12, 0.2, 8]} />
+              ) : (
+                <sphereGeometry args={[0.12, 8, 8]} />
+              )}
+              <meshStandardMaterial
+                color={node.type === 0 ? '#EF4444' : node.type === 1 ? '#F59E0B' : '#10B981'}
+                emissive={node.type === 0 ? '#EF4444' : node.type === 1 ? '#F59E0B' : '#10B981'}
+                emissiveIntensity={0.4}
+              />
+            </mesh>
+            <Text position={[node.position[0], node.position[1] + 0.3, node.position[2]]} fontSize={0.04} color={node.type === 0 ? '#EF4444' : node.type === 1 ? '#F59E0B' : '#10B981'} anchorX="center" anchorY="middle">
+              {node.type === 0 ? 'Miner' : node.type === 1 ? 'Validator' : 'Full Node'}
+            </Text>
+          </group>
         ))}
 
         {/* Network connections */}
@@ -982,16 +1160,27 @@ function Web3Animation() {
           <boxGeometry args={[0.3, 0.4, 0.1]} />
           <meshStandardMaterial color="#8B5CF6" emissive="#8B5CF6" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[-1, 0.5, 0]} fontSize={0.05} color="#8B5CF6" anchorX="center" anchorY="middle">
+          Solidity Code
+        </Text>
+
         {/* Contract deployment */}
         <mesh position={[0, 0, 0]}>
           <coneGeometry args={[0.15, 0.25, 8]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[0, 0.4, 0]} fontSize={0.05} color="#F59E0B" anchorX="center" anchorY="middle">
+          Deploy Contract
+        </Text>
+
         {/* Contract execution */}
         <mesh position={[1, 0, 0]}>
           <sphereGeometry args={[0.12, 16, 16]} />
           <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[1, 0.3, 0]} fontSize={0.05} color="#10B981" anchorX="center" anchorY="middle">
+          Execute Contract
+        </Text>
       </group>
 
       {/* Decentralized Applications */}
@@ -1001,16 +1190,27 @@ function Web3Animation() {
           <boxGeometry args={[0.4, 0.3, 0.08]} />
           <meshStandardMaterial color="#61DAFB" emissive="#61DAFB" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[-1, 0.4, 0]} fontSize={0.05} color="#61DAFB" anchorX="center" anchorY="middle">
+          React dApp
+        </Text>
+
         {/* Web3.js/Ethers.js */}
         <mesh position={[0, 0, 0]}>
           <cylinderGeometry args={[0.15, 0.15, 0.2, 16]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[0, 0.3, 0]} fontSize={0.05} color="#F59E0B" anchorX="center" anchorY="middle">
+          Web3.js
+        </Text>
+
         {/* IPFS for storage */}
         <mesh position={[1, 0, 0]}>
           <octahedronGeometry args={[0.12, 0]} />
           <meshStandardMaterial color="#65C2CB" emissive="#65C2CB" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[1, 0.3, 0]} fontSize={0.05} color="#65C2CB" anchorX="center" anchorY="middle">
+          IPFS Storage
+        </Text>
       </group>
 
       {/* Wallets & Users */}
@@ -1020,19 +1220,34 @@ function Web3Animation() {
           <boxGeometry args={[0.25, 0.15, 0.08]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[-1, 0.3, 0]} fontSize={0.05} color="#F59E0B" anchorX="center" anchorY="middle">
+          MetaMask
+        </Text>
+
         <mesh position={[0, 0, 0]}>
           <boxGeometry args={[0.25, 0.15, 0.08]} />
           <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[0, 0.3, 0]} fontSize={0.05} color="#10B981" anchorX="center" anchorY="middle">
+          Coinbase Wallet
+        </Text>
+
         {/* Private keys */}
         <mesh position={[-1, -0.3, 0]}>
           <sphereGeometry args={[0.08, 8, 8]} />
           <meshStandardMaterial color="#EF4444" emissive="#EF4444" emissiveIntensity={0.5} />
         </mesh>
+        <Text position={[-1, -0.1, 0]} fontSize={0.04} color="#EF4444" anchorX="center" anchorY="middle">
+          Private Key
+        </Text>
+
         <mesh position={[0, -0.3, 0]}>
           <sphereGeometry args={[0.08, 8, 8]} />
           <meshStandardMaterial color="#EF4444" emissive="#EF4444" emissiveIntensity={0.5} />
         </mesh>
+        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#EF4444" anchorX="center" anchorY="middle">
+          Private Key
+        </Text>
       </group>
 
       {/* Transaction flow */}
@@ -1078,24 +1293,36 @@ function CybersecurityAnimation() {
           <torusGeometry args={[2.5, 0.1, 8, 32]} />
           <meshStandardMaterial color="#EF4444" emissive="#EF4444" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[2.8, 0, 0]} fontSize={0.06} color="#EF4444" anchorX="center" anchorY="middle">
+          Network Security
+        </Text>
 
         {/* Middle layer - Application Security */}
         <mesh position={[0, 0, 0]}>
           <torusGeometry args={[1.8, 0.08, 8, 32]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[2.1, 0, 0]} fontSize={0.06} color="#F59E0B" anchorX="center" anchorY="middle">
+          Application Security
+        </Text>
 
         {/* Inner layer - Data Security */}
         <mesh position={[0, 0, 0]}>
           <torusGeometry args={[1.1, 0.06, 8, 32]} />
           <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[1.4, 0, 0]} fontSize={0.06} color="#10B981" anchorX="center" anchorY="middle">
+          Data Security
+        </Text>
 
         {/* Core - Identity & Access Management */}
         <mesh position={[0, 0, 0]}>
           <sphereGeometry args={[0.4, 16, 16]} />
           <meshStandardMaterial color="#3B82F6" emissive="#3B82F6" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[0, 0.6, 0]} fontSize={0.06} color="#3B82F6" anchorX="center" anchorY="middle">
+          IAM
+        </Text>
       </group>
 
       {/* Firewall */}
@@ -1111,11 +1338,18 @@ function CybersecurityAnimation() {
             <meshStandardMaterial color="#DC2626" emissive="#DC2626" emissiveIntensity={0.3} />
           </mesh>
         ))}
+        <Text position={[0, 0.6, 0]} fontSize={0.06} color="#DC2626" anchorX="center" anchorY="middle">
+          Firewall
+        </Text>
+
         {/* Firewall rules */}
         <mesh position={[0, 0.3, 0]}>
           <cylinderGeometry args={[0.15, 0.15, 0.05, 16]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[0, 0.5, 0]} fontSize={0.05} color="#F59E0B" anchorX="center" anchorY="middle">
+          Rules
+        </Text>
       </group>
 
       {/* Encryption */}
@@ -1125,24 +1359,43 @@ function CybersecurityAnimation() {
           <octahedronGeometry args={[0.2, 0]} />
           <meshStandardMaterial color="#8B5CF6" emissive="#8B5CF6" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[-1, 0.3, 0]} fontSize={0.05} color="#8B5CF6" anchorX="center" anchorY="middle">
+          AES-256
+        </Text>
+
         <mesh position={[0, 0, 0]}>
           <octahedronGeometry args={[0.2, 0]} />
           <meshStandardMaterial color="#06B6D4" emissive="#06B6D4" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[0, 0.3, 0]} fontSize={0.05} color="#06B6D4" anchorX="center" anchorY="middle">
+          SHA-256
+        </Text>
+
         {/* Encrypted data */}
         <mesh position={[1, 0, 0]}>
           <boxGeometry args={[0.3, 0.2, 0.1]} />
           <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.3} />
         </mesh>
+        <Text position={[1, 0.3, 0]} fontSize={0.05} color="#10B981" anchorX="center" anchorY="middle">
+          Encrypted Data
+        </Text>
+
         {/* Keys */}
         <mesh position={[-1, -0.4, 0]}>
           <cylinderGeometry args={[0.05, 0.05, 0.2, 8]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.5} />
         </mesh>
+        <Text position={[-1, -0.1, 0]} fontSize={0.04} color="#F59E0B" anchorX="center" anchorY="middle">
+          Public Key
+        </Text>
+
         <mesh position={[0, -0.4, 0]}>
           <cylinderGeometry args={[0.05, 0.05, 0.2, 8]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.5} />
         </mesh>
+        <Text position={[0, -0.1, 0]} fontSize={0.04} color="#F59E0B" anchorX="center" anchorY="middle">
+          Private Key
+        </Text>
       </group>
 
       {/* Threat Detection & Response */}
@@ -1152,25 +1405,44 @@ function CybersecurityAnimation() {
           <coneGeometry args={[0.15, 0.25, 8]} />
           <meshStandardMaterial color="#EF4444" emissive="#EF4444" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[-1, 0.4, 0]} fontSize={0.05} color="#EF4444" anchorX="center" anchorY="middle">
+          IDS/IPS
+        </Text>
+
         {/* SIEM */}
         <mesh position={[0, 0, 0]}>
           <sphereGeometry args={[0.18, 16, 16]} />
           <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[0, 0.3, 0]} fontSize={0.05} color="#F59E0B" anchorX="center" anchorY="middle">
+          SIEM
+        </Text>
+
         {/* Incident Response */}
         <mesh position={[1, 0, 0]}>
           <boxGeometry args={[0.25, 0.2, 0.15]} />
           <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.4} />
         </mesh>
+        <Text position={[1, 0.4, 0]} fontSize={0.05} color="#10B981" anchorX="center" anchorY="middle">
+          Incident Response
+        </Text>
+
         {/* Threats */}
         <mesh position={[-1, -0.5, 0]}>
           <octahedronGeometry args={[0.08, 0]} />
           <meshStandardMaterial color="#DC2626" emissive="#DC2626" emissiveIntensity={0.6} />
         </mesh>
+        <Text position={[-1, -0.7, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
+          Malware
+        </Text>
+
         <mesh position={[0, -0.5, 0]}>
           <octahedronGeometry args={[0.08, 0]} />
           <meshStandardMaterial color="#DC2626" emissive="#DC2626" emissiveIntensity={0.6} />
         </mesh>
+        <Text position={[0, -0.7, 0]} fontSize={0.04} color="#DC2626" anchorX="center" anchorY="middle">
+          DDoS Attack
+        </Text>
       </group>
 
       {/* Security monitoring lines */}
